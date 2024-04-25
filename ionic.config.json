@@ -1,0 +1,7 @@
+{
+  "name": "netflix-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
