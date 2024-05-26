@@ -1,17 +1,235 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-row class="ion-justify-content-center ion-text-center">
+      <ion-col class="ion-text-left" size="4"
+        ><ion-icon class="large-icon" name="menu-outline"></ion-icon
+      ></ion-col>
+
+      <ion-col size="4" class="ion-text-center"
+        ><img class="logo" src="../../assets/mockdata/netflix-logo.png" alt=""
+      /></ion-col>
+
+      <ion-col size="4" class="ion-text-right"
+        ><ion-icon class="large-icon" name="settings"></ion-icon
+      ></ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center ion-text-center">
+      <ion-col size="4" class="ion-text-right">TV Shows</ion-col>
+      <ion-col size="4">Movies</ion-col>
+      <ion-col
+        size="4"
+        tappable
+        (click)="openCategories()"
+        class="ion-text-left"
+        >Categories
+        <ion-icon name="caret-down-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <swiper-container
+    class="slides-container"
+    effect="coverflow"
+    alt="poster"
+    [slidesPerView]="1"
+    direction="horizontal"
+    slides-per-view="1"
+    parallax="true"
+    autoplay
+    [autoplay]="{delay: 5000}"
+    speed="1000"
+    (ionSlideChange)="onSlideChange($event)"
+  >
+    <swiper-slide
+      class="swiper-slide"
+      *ngFor="let item of this.spotlight; let i = index;"
+    >
+      <div
+        class="swiper-slides"
+        [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / cover'"
+      >
+        <div class="gradient"></div>
+        <div class="info">
+          <h3 class="title">{{item.title}}</h3>
+          <span class="rating">{{item.popularity}}</span>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+          <ion-row class="ion-align-items-center">
+            <ion-col class="ion-text-center" size="4">
+              <div class="btn-vertical large-icon">
+                <ion-icon name="add" class="large-icon"></ion-icon>
+                <span>My List</span>
+              </div>
+            </ion-col>
+
+            <ion-col class="ion-text-center" size="4">
+              <div class="btn-play">
+                <ion-icon name="play" color="dark"></ion-icon>
+                <span>Play</span>
+              </div>
+            </ion-col>
+
+            <ion-col class="ion-text-center" size="4">
+              <div class="btn-vertical">
+                <ion-icon
+                  name="information-circle-outline"
+                  class="large-icon"
+                ></ion-icon>
+                <span>Info</span>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+
+  <div class="category-container">
+    <div class="category-title-container">
+      <h3 class="category-title">Trending TV Shows</h3>
+      <ion-button>See all</ion-button>
+    </div>
+    <swiper-container
+      class="movies-container"
+      effect="card"
+      alt="poster"
+      [slidesPerView]="3.3"
+      [spaceBetween]="5"
+      direction="horizontal"
+      parallax="true"
+      speed="1000"
+    >
+      <swiper-slide
+        class="swiper-slide"
+        *ngFor="let item of topRatedTvShows; let i = index;"
+        button
+        [routerLink]="['/show-details', item.id]"
+      >
+        <div
+          class="swiper-slides"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+        >
+          <div class="gradient"></div>
+          <div class="info">
+            <span class="rating">{{item.vote_count}}</span>
+          </div>
+        </div>
+        <p class="video-title">{{item.name}}</p>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <div class="category-container">
+    <div class="category-title-container">
+      <h3 class="category-title">Movies 1</h3>
+      <ion-button>See all</ion-button>
+    </div>
+    <swiper-container
+      class="movies-container"
+      effect="card"
+      alt="poster"
+      [slidesPerView]="3.3"
+      [spaceBetween]="5"
+      direction="horizontal"
+      parallax="true"
+      speed="1000"
+    >
+      <swiper-slide
+        class="swiper-slide"
+        *ngFor="let item of movies; let i = index;"
+        button
+        [routerLink]="['/details', item.id]"
+      >
+        <div
+          class="swiper-slides"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+        >
+          <div class="gradient"></div>
+          <div class="info">
+            <span class="rating">{{item.vote_count}}</span>
+          </div>
+        </div>
+        <p class="video-title">{{item.title}}</p>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <div class="category-container">
+    <div class="category-title-container">
+      <h3 class="category-title">Movies 2</h3>
+      <ion-button>See all</ion-button>
+    </div>
+    <swiper-container
+      class="movies-container"
+      effect="card"
+      alt="poster"
+      [slidesPerView]="3.3"
+      [spaceBetween]="5"
+      autoplay
+      [autoplay]="{delay: 1200}"
+      direction="horizontal"
+      parallax="true"
+      speed="1000"
+    >
+      <swiper-slide
+        class="swiper-slide"
+        *ngFor="let item of movies; let i = index;"
+      >
+        <div
+          class="swiper-slides"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+        >
+          <div class="gradient"></div>
+          <div class="info">
+            <span class="rating">{{item.vote_count}}</span>
+          </div>
+        </div>
+        <p class="video-title">{{item.title}}</p>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <div class="category-container">
+    <div class="category-title-container">
+      <h3 class="category-title">Movies 3</h3>
+      <ion-button>See all</ion-button>
+    </div>
+    <swiper-container
+      class="movies-container"
+      effect="card"
+      alt="poster"
+      [slidesPerView]="3.3"
+      [spaceBetween]="5"
+      autoplay
+      [autoplay]="{delay: 1400}"
+      direction="horizontal"
+      parallax="true"
+      speed="1000"
+    >
+      <swiper-slide
+        class="swiper-slide"
+        *ngFor="let item of movies; let i = index;"
+      >
+        <div
+          class="swiper-slides"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+        >
+          <div class="gradient"></div>
+          <div class="info">
+            <span class="rating">{{item.vote_count}}</span>
+          </div>
+        </div>
+        <p class="video-title">{{item.title}}</p>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
 </ion-content>

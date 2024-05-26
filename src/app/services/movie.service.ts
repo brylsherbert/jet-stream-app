@@ -22,7 +22,25 @@ export class MovieService {
 
   getMovieDetails(id: string): Observable<MovieResult> {
     return this.http.get<MovieResult>(
-      `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,images`
+    );
+  }
+
+  getSearchResponse(query: string): Observable<MovieResult> {
+    return this.http.get<MovieResult>(
+      `${BASE_URL}/search/movie?query=${query}&api_key=${API_KEY}`
+    );
+  }
+
+  getPopularTvShows(): Observable<ApiResult> {
+    return this.http.get<ApiResult>(
+      `${BASE_URL}/tv/popular?api_key=${API_KEY}`
+    );
+  }
+
+  getTvShowDetails(id: string): Observable<MovieResult> {
+    return this.http.get<MovieResult>(
+      `${BASE_URL}/tv/${id}?api_key=${API_KEY}`
     );
   }
 }
