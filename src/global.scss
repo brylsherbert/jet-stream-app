@@ -37,6 +37,6 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 :root {
-  --ion-background-color: #000;
-  --ion-text-color: #fff;
+  --ion-background-color: #000 !important;
+  --ion-text-color: #fff !important;
 }
