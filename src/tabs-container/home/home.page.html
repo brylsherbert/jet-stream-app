@@ -82,7 +82,7 @@
                 class="ion-text-center"
                 size="4"
                 button
-                [routerLink]="['/details', item?.id]"
+                [routerLink]="['/movie-details', item?.id]"
               >
                 <div class="btn-vertical">
                   <ion-icon
@@ -153,7 +153,7 @@
         class="swiper-slide"
         *ngFor="let item of movies; let i = index;"
         button
-        [routerLink]="['/details', item.id]"
+        [routerLink]="['/movie-details', item?.id]"
       >
         <div
           class="swiper-slides"

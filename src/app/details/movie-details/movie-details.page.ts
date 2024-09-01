@@ -28,7 +28,7 @@ import {
   IonAvatar,
   IonBadge,
 } from '@ionic/angular/standalone';
-import { MovieService } from '../services/movie.service';
+import { MovieService } from '../../services/movie.service';
 
 import { addIcons } from 'ionicons';
 import {
@@ -45,14 +45,13 @@ import {
   caretForwardCircleOutline,
   playSharp,
 } from 'ionicons/icons';
-import { catchError, finalize } from 'rxjs';
-import { MovieResult } from '../services/interfaces';
+import { MovieResult } from '../../services/interfaces';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.page.html',
-  styleUrls: ['./details.page.scss'],
+  selector: 'app-movie-details',
+  templateUrl: './movie-details.page.html',
+  styleUrls: ['./movie-details.page.scss'],
   standalone: true,
   imports: [
     IonBadge,
@@ -78,7 +77,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
 })
-export class DetailsPage {
+export class MovieDetailsPage {
   private movieService = inject(MovieService);
   public imageBaseUrl = 'https://image.tmdb.org/t/p';
   public movie: WritableSignal<MovieService | any> = signal(null);

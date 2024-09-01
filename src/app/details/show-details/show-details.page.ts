@@ -27,7 +27,7 @@ import {
   IonAvatar,
 } from '@ionic/angular/standalone';
 
-import { MovieService } from '../services/movie.service';
+import { MovieService } from '../../services/movie.service';
 import { addIcons } from 'ionicons';
 
 import {
@@ -99,6 +99,4 @@ export class ShowDetailsPage {
       caretForwardCircleOutline,
     });
   }
-
-  ngOnInit() {}
 }
