@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Search </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      #searchInput
+      showCancelButton="focus"
+      [debounce]="500"
+      (ionInput)="getSearchResults(searchInput.value)"
+      (ionClear)="resetSearchResults()"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  @if (isLoading) {
+  <ion-list>
+    @for (i of dummyArray; track i) {
+    <ion-item lines="none" class="ion-padding-bottom">
+      <ion-avatar slot="start">
+        <ion-skeleton-text></ion-skeleton-text>
+      </ion-avatar>
+      <ion-skeleton-text animated style="height: 40px"></ion-skeleton-text>
+    </ion-item>
+    }
+  </ion-list>
+  } @else if (error) {
+  <ion-alert
+    header="Error"
+    [message]="error"
+    isOpen="true"
+    [buttons]="['Ok']"
+  ></ion-alert>
+  }
+
+  <ion-list>
+    @for (item of this.search_response; track item?.poster_path) { @if
+    (item?.backdrop_path) {
+    <ion-item button [routerLink]="['/details', item.id]">
+      <ion-avatar slot="start">
+        <img
+          alt="search_thumbnail"
+          [src]="image_base_url + '/w500' + item?.backdrop_path"
+          class="search-item-thumbnail"
+        />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.release_date | date:'y' }}</p>
+      </ion-label>
+
+      <ion-badge slot="end">{{ item.vote_average }}</ion-badge>
+    </ion-item>
+    } } @empty { @if (!isLoading && search_response.length === 0 && isEmpty &&
+    searchInput.value) {
+    <ion-item lines="none">
+      <ion-label class="ion-text-center">No match found.</ion-label>
+    </ion-item>
+    } }
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore(searchInput.value, $event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    />
+  </ion-infinite-scroll>
+</ion-content>

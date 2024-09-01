@@ -14,22 +14,23 @@ export class MovieService {
   private http = inject(HttpClient);
   constructor() {}
 
-  getTopRatedMovies(page = 1): Observable<ApiResult> {
+  async getTopRatedMovies(page = 1): Promise<Observable<ApiResult>> {
     return this.http.get<ApiResult>(
       `${BASE_URL}/movie/popular?page=${page}&api_key=${API_KEY}`
     );
   }
 
-  getMovieDetails(id: string): Observable<MovieResult> {
+  getMovieDetails(id: string, page: number): Observable<MovieResult> {
     return this.http.get<MovieResult>(
-      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,images`
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&page=${page}&append_to_response=videos,images,similar,recommendations,lists,account_states`
     );
   }
 
-  getSearchResponse(query: string): Observable<MovieResult> {
-    return this.http.get<MovieResult>(
-      `${BASE_URL}/search/movie?query=${query}&api_key=${API_KEY}`
+  getSearchResponse(page: number, query: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(
+      `${BASE_URL}/search/movie?query=${query}&page=${page}&include_adult=false&language=en-US&api_key=${API_KEY}`
     );
+    // .pipe(delay(5000));
   }
 
   getPopularTvShows(): Observable<ApiResult> {
@@ -42,5 +43,9 @@ export class MovieService {
     return this.http.get<MovieResult>(
       `${BASE_URL}/tv/${id}?api_key=${API_KEY}`
     );
+  }
+
+  getMovieGenres() {
+    return this.http.get(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
   }
 }

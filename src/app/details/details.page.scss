@@ -1,0 +1,142 @@
+ion-header {
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #151515;
+    border-radius: 2.5em;
+    transition: background-color 0.1s, color 0.1s;
+  }
+
+  .back-button:hover {
+    background-color: #fff;
+    color: #151515;
+  }
+}
+
+ion-content {
+  .ion-card-container {
+    border-radius: 0;
+
+    .thumbnail-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+      .thumbnail {
+        filter: blur(60px);
+      }
+
+      .poster-container {
+        display: flex;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+      }
+
+      .gradient {
+        position: absolute;
+        bottom: 0;
+        background: rgb(21, 21, 21);
+        background: linear-gradient(
+          180deg,
+          rgba(21, 21, 21, 0) 0%,
+          rgba(21, 21, 21, 0.5592612044817927) 55%,
+          rgba(21, 21, 21, 1) 90%
+        );
+        width: 100%;
+        height: 50px;
+      }
+    }
+
+    ion-card-header {
+      background-color: var(--background-color);
+      padding: 10px 16px 16px 16px;
+
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .ion-card-title-details {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      ion-card-title {
+        font-size: 22px;
+      }
+
+      ion-card-subtitle {
+        margin: 0;
+      }
+    }
+
+    ion-card-content {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .movie-overview-container {
+        position: relative;
+
+        .movie-overview {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3; /* Limit to 3 lines */
+          overflow: hidden;
+          transition: -webkit-line-clamp 0.3s ease, max-height 0.3s ease;
+          line-height: 1.2em; /* Adjust line height as needed */
+          line-clamp: 3;
+          text-overflow: ellipsis; /* Add ellipsis */
+        }
+
+        .movie-overview.expanded {
+          -webkit-line-clamp: unset; /* Show all lines when expanded */
+          line-clamp: unset;
+        }
+
+        .see-more-button {
+          background: none;
+          border: none;
+          color: blue; /* Adjust color as needed */
+          cursor: pointer;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .suggest-movies-container {
+    h6 {
+      font-weight: bold;
+      padding: 0px 16px 0px;
+    }
+    .suggested-movies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+
+      img {
+        height: 100%;
+        width: 120px;
+      }
+    }
+    .similar-movies-pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+    }
+  }
+}

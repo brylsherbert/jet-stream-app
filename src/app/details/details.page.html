@@ -1,20 +1,115 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-buttons class="back-button" slot="start">
+    <ion-back-button defaultHref="/"></ion-back-button>
+  </ion-buttons>
+  <!-- <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ movie()?.title }}</ion-title>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
   @if (movie(); as movie) {
-  <ion-card class="ion-no-padding ion-no-margin">
-    <div
-      class="thumbnail-container"
-      [style.height.px]="200"
-      [style.background]="'url('+ imageBaseUrl + '/original' + movie?.backdrop_path +') no-repeat center center / cover'"
-    ></div>
+
+  <ion-card class="ion-card-container ion-no-padding ion-no-margin">
+    <div class="thumbnail-container">
+      <div
+        class="thumbnail"
+        [style.height.px]="360"
+        [style.background]="'url('+ imageBaseUrl + '/w400' + movie?.poster_path +') no-repeat center center / cover'"
+      ></div>
+      <div class="poster-container" [style.height.px]="300">
+        <img
+          [style.height.px]="300"
+          [src]="imageBaseUrl + '/w500' + movie?.poster_path"
+          alt="poster"
+        />
+      </div>
+      <div class="gradient"></div>
+    </div>
+
+    <ion-card-header class="ion-card-header-container">
+      <div class="ion-card-title-details">
+        <ion-card-title>{{movie.title}} </ion-card-title>
+        <ion-card-subtitle>{{movie.tagline}}</ion-card-subtitle>
+        <ion-text color="light">
+          <span>{{ movie.release_date | date: 'YYYY'}} /</span>
+          @for (genre of movie.genres; track genre.id; let isLast = $last;) {
+          <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
+          }
+        </ion-text>
+        <ion-button expand="block" class="play-button"
+          ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
+          >Play</ion-button
+        >
+      </div>
+
+      <ion-card-content class="ion-no-padding">
+        <div class="movie-overview-container">
+          <p
+            #movie_overview
+            color="medium"
+            class="movie-overview"
+            [class.expanded]="isExpanded"
+            [style.webkitLineClamp]="isExpanded ? 'none' : '3'"
+          >
+            {{ movie.overview }}
+          </p>
+          <button
+            class="see-more-button"
+            (click)="toggleText()"
+            *ngIf="movie.overview.split(' ').length > 25"
+          >
+            {{ isExpanded ? 'See less' : 'See more' }}
+          </button>
+        </div>
+
+        <!-- <div class="ion-items">
+          <ion-item lines="none" class="ion-item-container">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
+            <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
+          </ion-item>
+        </div> -->
+      </ion-card-content>
+    </ion-card-header>
   </ion-card>
+  <div class="suggest-movies-container">
+    <h6>More Like This</h6>
+    <div class="suggested-movies">
+      @for (item of similarMovies().results.slice(0, 12); track
+      item.poster_path) {
+
+      <img
+        [src]="imageBaseUrl + '/w400' + item.poster_path"
+        alt="poster"
+        button
+        [routerLink]="['/details', item.id]"
+      />
+
+      }
+    </div>
+    <div class="similar-movies-pagination-container">
+      <button
+        (click)="changePage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ similarMovies()?.total_pages }}</span>
+      <button
+        (click)="changePage(currentPage + 1)"
+        [disabled]="currentPage === similarMovies()?.total_pages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
   }
 </ion-content>

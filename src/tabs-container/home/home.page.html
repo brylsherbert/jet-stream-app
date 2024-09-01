@@ -31,8 +31,8 @@
 
 <ion-content [fullscreen]="true">
   <swiper-container
-    class="slides-container"
-    effect="coverflow"
+    class="spotlight-container"
+    effect="fade"
     alt="poster"
     [slidesPerView]="1"
     direction="horizontal"
@@ -49,38 +49,51 @@
     >
       <div
         class="swiper-slides"
-        [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / cover'"
+        [style.background]="'url('+imageBaseUrl+'/original'+item?.poster_path+') no-repeat top center / cover'"
       >
-        <div class="gradient"></div>
-        <div class="info">
-          <h3 class="title">{{item.title}}</h3>
-          <span class="rating">{{item.popularity}}</span>
+        <div class="gradient">
+          <div class="info">
+            <h1 class="title">{{item?.title}}</h1>
+            <!-- <ion-text color="tertiary spotlight-genre">
+              @for (genre of this.spotlight; track genre.id; let isLast =
+              $last;) {
+              <span> {{genre.title}} {{!isLast ? '•' : ''}} </span>
+              }
+            </ion-text> -->
 
-          <ion-row class="ion-align-items-center">
-            <ion-col class="ion-text-center" size="4">
-              <div class="btn-vertical large-icon">
-                <ion-icon name="add" class="large-icon"></ion-icon>
-                <span>My List</span>
-              </div>
-            </ion-col>
+            <ion-row
+              class="ion-align-items-center ion-row-container spotlight-buttons-container"
+            >
+              <ion-col class="ion-text-center" size="4">
+                <div class="btn-vertical large-icon">
+                  <ion-icon name="add" class="large-icon"></ion-icon>
+                  <span>My List</span>
+                </div>
+              </ion-col>
 
-            <ion-col class="ion-text-center" size="4">
-              <div class="btn-play">
-                <ion-icon name="play" color="dark"></ion-icon>
-                <span>Play</span>
-              </div>
-            </ion-col>
+              <ion-col class="ion-text-center" size="4">
+                <div class="btn-play">
+                  <ion-icon name="play" color="dark"></ion-icon>
+                  <span>Play</span>
+                </div>
+              </ion-col>
 
-            <ion-col class="ion-text-center" size="4">
-              <div class="btn-vertical">
-                <ion-icon
-                  name="information-circle-outline"
-                  class="large-icon"
-                ></ion-icon>
-                <span>Info</span>
-              </div>
-            </ion-col>
-          </ion-row>
+              <ion-col
+                class="ion-text-center"
+                size="4"
+                button
+                [routerLink]="['/details', item?.id]"
+              >
+                <div class="btn-vertical">
+                  <ion-icon
+                    name="information-circle-outline"
+                    class="large-icon"
+                  ></ion-icon>
+                  <span>Info</span>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
         </div>
       </div>
     </swiper-slide>
@@ -109,14 +122,14 @@
       >
         <div
           class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
         >
           <div class="gradient"></div>
           <div class="info">
-            <span class="rating">{{item.vote_count}}</span>
+            <span class="rating">{{item?.vote_count}}</span>
           </div>
         </div>
-        <p class="video-title">{{item.name}}</p>
+        <p class="video-title">{{item?.name}}</p>
       </swiper-slide>
     </swiper-container>
   </div>
@@ -144,14 +157,14 @@
       >
         <div
           class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
         >
           <div class="gradient"></div>
           <div class="info">
-            <span class="rating">{{item.vote_count}}</span>
+            <span class="rating">{{item?.vote_count}}</span>
           </div>
         </div>
-        <p class="video-title">{{item.title}}</p>
+        <p class="video-title">{{item?.title}}</p>
       </swiper-slide>
     </swiper-container>
   </div>
@@ -179,14 +192,14 @@
       >
         <div
           class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
         >
           <div class="gradient"></div>
           <div class="info">
-            <span class="rating">{{item.vote_count}}</span>
+            <span class="rating">{{item?.vote_count}}</span>
           </div>
         </div>
-        <p class="video-title">{{item.title}}</p>
+        <p class="video-title">{{item?.title}}</p>
       </swiper-slide>
     </swiper-container>
   </div>
@@ -214,14 +227,14 @@
       >
         <div
           class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item.poster_path+') no-repeat top center / contain'"
+          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
         >
           <div class="gradient"></div>
           <div class="info">
-            <span class="rating">{{item.vote_count}}</span>
+            <span class="rating">{{item?.vote_count}}</span>
           </div>
         </div>
-        <p class="video-title">{{item.title}}</p>
+        <p class="video-title">{{item?.title}}</p>
       </swiper-slide>
     </swiper-container>
   </div>

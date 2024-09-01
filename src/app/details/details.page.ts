@@ -1,7 +1,6 @@
 import {
   Component,
   Input,
-  OnInit,
   WritableSignal,
   inject,
   signal,
@@ -16,8 +15,39 @@ import {
   IonButtons,
   IonBackButton,
   IonCard,
+  IonLabel,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonText,
+  IonItem,
+  IonIcon,
+  IonCardContent,
+  IonCardHeader,
+  IonButton,
+  InfiniteScrollCustomEvent,
+  IonAvatar,
+  IonBadge,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
+
+import { addIcons } from 'ionicons';
+import {
+  caretDownOutline,
+  menu,
+  menuOutline,
+  settings,
+  settingsOutline,
+  add,
+  informationCircleOutline,
+  play,
+  calendarOutline,
+  cashOutline,
+  caretForwardCircleOutline,
+  playSharp,
+} from 'ionicons/icons';
+import { catchError, finalize } from 'rxjs';
+import { MovieResult } from '../services/interfaces';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -25,6 +55,17 @@ import { MovieService } from '../services/movie.service';
   styleUrls: ['./details.page.scss'],
   standalone: true,
   imports: [
+    IonBadge,
+    IonAvatar,
+    IonButton,
+    IonCardHeader,
+    IonCardContent,
+    IonIcon,
+    IonItem,
+    IonText,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonLabel,
     IonCard,
     IonBackButton,
     IonButtons,
@@ -34,23 +75,72 @@ import { MovieService } from '../services/movie.service';
     IonToolbar,
     CommonModule,
     FormsModule,
+    RouterModule,
   ],
 })
 export class DetailsPage {
   private movieService = inject(MovieService);
   public imageBaseUrl = 'https://image.tmdb.org/t/p';
   public movie: WritableSignal<MovieService | any> = signal(null);
+  public similarMovies: WritableSignal<MovieService | any> = signal(null);
+  isExpanded: boolean = false;
+  public currentPage = 1;
+  public error = null;
+  public isLoading = false;
+  public suggestedMovies: MovieResult[] = [];
 
   @Input()
   set id(movieId: string) {
-    this.movieService.getMovieDetails(movieId).subscribe((movie) => {
-      console.log(movie);
+    this.currentPage = 1;
+    this.fetchMovieDetails(movieId, this.currentPage);
+  }
 
-      this.movie.set(movie);
+  constructor() {
+    addIcons({
+      caretDownOutline,
+      menu,
+      menuOutline,
+      settings,
+      settingsOutline,
+      add,
+      informationCircleOutline,
+      play,
+      calendarOutline,
+      cashOutline,
+      caretForwardCircleOutline,
+      playSharp,
     });
   }
 
-  constructor() {}
+  fetchMovieDetails(movieId: string, page: number): void {
+    this.movieService.getMovieDetails(movieId, page).subscribe({
+      next: (movie) => {
+        console.log(movie);
+        this.movie.set(movie);
 
-  ngOnInit() {}
+        const { similar } = movie;
+        console.log(similar);
+        this.similarMovies.set(similar);
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to fetch movie details:', err);
+        this.error = err;
+        this.isLoading = false;
+      },
+    });
+  }
+
+  public changePage(page: number): void {
+    if (page > 0 && page <= (this.similarMovies()?.total_pages || 0)) {
+      this.currentPage = page;
+      const movieId = this.movie().id; // Get the current movieId
+      this.fetchMovieDetails(movieId, this.currentPage);
+    }
+  }
+
+  toggleText() {
+    this.isExpanded = !this.isExpanded;
+  }
 }

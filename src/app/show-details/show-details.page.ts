@@ -16,8 +16,33 @@ import {
   IonCard,
   IonButtons,
   IonBackButton,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonText,
+  IonCardHeader,
+  IonCardContent,
+  IonLabel,
+  IonItem,
+  IonIcon,
+  IonAvatar,
 } from '@ionic/angular/standalone';
+
 import { MovieService } from '../services/movie.service';
+import { addIcons } from 'ionicons';
+
+import {
+  caretDownOutline,
+  menu,
+  menuOutline,
+  settings,
+  settingsOutline,
+  add,
+  informationCircleOutline,
+  play,
+  calendarOutline,
+  cashOutline,
+  caretForwardCircleOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-show-details',
@@ -25,6 +50,15 @@ import { MovieService } from '../services/movie.service';
   styleUrls: ['./show-details.page.scss'],
   standalone: true,
   imports: [
+    IonAvatar,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonCardContent,
+    IonCardHeader,
+    IonText,
+    IonCardSubtitle,
+    IonCardTitle,
     IonBackButton,
     IonButtons,
     IonCard,
@@ -50,7 +84,21 @@ export class ShowDetailsPage {
     });
   }
 
-  constructor() {}
+  constructor() {
+    addIcons({
+      caretDownOutline,
+      menu,
+      menuOutline,
+      settings,
+      settingsOutline,
+      add,
+      informationCircleOutline,
+      play,
+      calendarOutline,
+      cashOutline,
+      caretForwardCircleOutline,
+    });
+  }
 
   ngOnInit() {}
 }

@@ -1,0 +1,91 @@
+ion-header {
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #151515;
+    // border: 1.5px solid #fff;
+    border-radius: 2.5em;
+    transition: background-color 0.1s, color 0.1s;
+  }
+
+  .back-button:hover {
+    background-color: #fff;
+    color: #151515;
+  }
+}
+
+ion-content {
+  .ion-card-container {
+    border-radius: 0;
+
+    .thumbnail-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+      .thumbnail {
+        filter: blur(60px);
+      }
+
+      .poster-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+
+        display: flex;
+        justify-content: center;
+      }
+
+      .gradient {
+        position: absolute;
+        bottom: 0;
+        background: rgb(21, 21, 21);
+        background: linear-gradient(
+          180deg,
+          rgba(21, 21, 21, 0) 0%,
+          rgba(21, 21, 21, 0.5592612044817927) 55%,
+          rgba(21, 21, 21, 1) 90%
+        );
+        width: 100%;
+        height: 50px;
+      }
+    }
+
+    .ion-card-header-container {
+      background-color: var(--background-color);
+      padding: 10px 16px 16px 16px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      ion-card-title {
+        font-size: 22px;
+      }
+
+      .movie-overview {
+        margin-top: 8px;
+        text-align: center;
+      }
+    }
+
+    .ion-card-content-container {
+      margin-top: 10px;
+      width: 70%;
+
+      display: flex;
+      flex-direction: column;
+
+      ion-item {
+        --display: flex;
+        --justify-content: center;
+      }
+    }
+  }
+}

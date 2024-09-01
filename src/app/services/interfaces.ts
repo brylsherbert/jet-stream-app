@@ -26,6 +26,7 @@ export interface MovieResult {
   revenue: number;
   runtime: number;
   spoken_languages: Spokenlanguage[];
+  similar: any[];
   status: string;
   tagline: string;
   title: string;

@@ -14,13 +14,13 @@ import {
   IonCol,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { MovieService } from '../services/movie.service';
+import { MovieService } from 'src/app/services/movie.service';
 import { catchError, finalize } from 'rxjs';
-import { ApiResult, MovieResult } from '../services/interfaces';
-import { SharedDirectivesModule } from '../directives/shared-directives.module';
-import { ModalPage } from '../modal/modal.page';
+import { MovieResult } from 'src/app/services/interfaces';
+import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
+import { ModalPage } from 'src/app/modal/modal.page';
 import { ModalController } from '@ionic/angular';
-import { DrawerService } from '../services/drawer.service';
+import { DrawerService } from 'src/app/services/drawer.service';
 import { addIcons } from 'ionicons';
 import {
   caretDownOutline,
@@ -37,9 +37,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -56,17 +56,18 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
 })
-export class Tab1Page {
+export class HomePage {
   public movieService = inject(MovieService);
   public currentPage = 1;
   public error = null;
   public isLoading = false;
   public movies: MovieResult[] = [];
   public imageBaseUrl = 'https://image.tmdb.org/t/p';
-  public spotlight: MovieResult[] = [];
+  public spotlight: any;
   public popularity: any;
   public searchResult: MovieResult[] = [];
   public topRatedTvShows: MovieResult[] = [];
+  public movieGenres: any[] = [];
   activeSlideIndex: number = 0;
 
   constructor(private drawerService: DrawerService) {
@@ -81,10 +82,7 @@ export class Tab1Page {
       play,
     });
     this.loadMovies();
-
-    setTimeout(() => {
-      this.getSpotlight();
-    }, 100);
+    this.getPopularTVShows();
   }
 
   openCategories() {
@@ -100,14 +98,8 @@ export class Tab1Page {
     this.activeSlideIndex = -1;
   }
 
-  loadMovies(event?: InfiniteScrollCustomEvent) {
-    // TEST MOVIE SERVICE DATA
-    // this.movieService.getMovieDetails('693134').subscribe((movies) => {
-    //   console.log(movies);
-    // });
-
-    this.movieService
-      .getTopRatedMovies(this.currentPage)
+  async loadMovies(event?: InfiniteScrollCustomEvent) {
+    (await this.movieService.getTopRatedMovies(this.currentPage))
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -128,11 +120,14 @@ export class Tab1Page {
 
           this.movies.push(...res.results);
           console.log('Results: This Movies', this.movies);
+          this.getSpotlight();
           if (event) {
             event.target.disabled = res.total_pages === this.currentPage;
           }
         },
       });
+
+    this.getMovieGenres();
 
     // GET SEARCH RESPONSE
     // this.movieService
@@ -165,7 +160,63 @@ export class Tab1Page {
     // if (!event) {
     //   this.isLoading = true;
     // }
+  }
 
+  loadMore(event: InfiniteScrollCustomEvent) {
+    // this.currentPage++;
+    // this.loadMovies(event);
+  }
+
+  async getMovieGenres() {
+    this.movieService
+      .getMovieGenres()
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        }),
+        catchError((err: any) => {
+          console.log(err);
+
+          this.error = err.error.status_message;
+          return [];
+        })
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Movie Genres: ', res);
+
+          Object.values(res).forEach((key) => {
+            this.movieGenres.push(...key);
+          });
+          console.log('Results: movieGenres', this.movieGenres);
+        },
+      });
+
+    // setTimeout(() => {
+    //   this.spotlight.forEach((element: any) => {
+    //     // console.log('ELEMENT: ', element.genre_ids);
+    //     element.genre_ids.forEach((id: any) => {
+    //       for (let i = 0, length = this.movieGenres.length; i < length; i++) {
+    //         if (id === this.movieGenres[i].id) {
+    //           element.genre_ids[i] = this.movieGenres[i].name;
+    //           console.log('ID: ', id);
+    //           console.log('genre.name: ', this.movieGenres);
+    //           console.log(
+    //             'element.genre_ids[i] = this.movieGenres[i].name; ',
+    //             element.genre_ids
+    //           );
+    //         } else {
+    //           continue;
+    //         }
+    //       }
+    //     }, (element.genre_ids = this.spotlight.genre_ids));
+    //   });
+
+    //   // console.log('GENRE: spotGenreIds', spotlightVal);
+    // }, 1000);
+  }
+
+  async getPopularTVShows(event?: InfiniteScrollCustomEvent) {
     this.movieService
       .getPopularTvShows()
       .pipe(
@@ -192,23 +243,14 @@ export class Tab1Page {
       });
   }
 
-  loadMore(event: InfiniteScrollCustomEvent) {
-    // this.currentPage++;
-    // this.loadMovies(event);
-  }
+  async getSpotlight() {
+    this.spotlight = new Set();
+    for (let i = 0, length = 10; i < length; i++) {
+      this.spotlight.add(
+        this.movies[Math.floor(Math.random() * this.movies.length)]
+      );
+    }
 
-  getSpotlight() {
-    setTimeout(() => {
-      for (let i = 0, length = 10; i < length; i++) {
-        this.spotlight.push(
-          this.movies[Math.floor(Math.random() * this.movies.length)]
-        );
-      }
-
-      const spotlightUnique = new Set(this.spotlight);
-      console.log('spotlightUnique', spotlightUnique);
-
-      console.log('Results: Spotlight Movies', this.spotlight);
-    }, 100);
+    console.log('Results: Spotlight Movies', this.spotlight);
   }
 }
