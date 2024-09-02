@@ -30,30 +30,87 @@
       <div class="gradient"></div>
     </div>
 
-    <ion-card-header class="ion-card-header-container ion-no-border">
-      <ion-card-title>{{tvShow.name}}</ion-card-title>
-      <ion-card-subtitle>{{tvShow.tagline}}</ion-card-subtitle>
-      <ion-text color="tertiary">
-        @for (genre of tvShow.genres; track genre.id; let isLast = $last;) {
-        <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
-        }
-      </ion-text>
-      <ion-label color="medium " class="movie-overview"
-        >{{tvShow.overview}}</ion-label
-      >
+    <ion-card-header class="ion-card-header-container">
+      <div class="ion-card-title-details">
+        <ion-card-title>{{tvShow.name}} </ion-card-title>
+        <ion-card-subtitle>{{tvShow.tagline}}</ion-card-subtitle>
+        <ion-text color="light">
+          <span>{{ tvShow.last_air_date | date: 'YYYY'}} /</span>
+          @for (genre of tvShow.genres; track genre.id; let isLast = $last;) {
+          <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
+          }
+        </ion-text>
+        <ion-button expand="block" class="play-button"
+          ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
+          >Play</ion-button
+        >
+      </div>
 
-      <ion-card-content class="ion-card-content-container ion-no-padding">
-        <ion-item lines="none" class="ion-item-container">
-          <ion-icon name="calendar-outline" slot="start"></ion-icon>
-          <ion-label>{{ tvShow.release_date | date: 'YYYY-MM-d'}}</ion-label>
-        </ion-item>
+      <ion-card-content class="ion-no-padding">
+        <div class="tvShow-overview-container">
+          <p
+            #tvShow_overview
+            color="medium"
+            class="tvShow-overview"
+            [class.expanded]="isExpanded"
+            [style.webkitLineClamp]="isExpanded ? 'none' : '3'"
+          >
+            {{ tvShow.overview }}
+          </p>
+          <button
+            class="see-more-button"
+            (click)="toggleText()"
+            *ngIf="tvShow.overview.split(' ').length > 25"
+          >
+            {{ isExpanded ? 'See less' : 'See more' }}
+          </button>
+        </div>
 
-        <ion-item lines="none">
-          <ion-icon name="cash-outline" slot="start"></ion-icon>
-          <ion-label>{{ tvShow.revenue | currency: 'USD'}}</ion-label>
-        </ion-item>
+        <!-- <div class="ion-items">
+          <ion-item lines="none" class="ion-item-container">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
+            <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
+          </ion-item>
+        </div> -->
       </ion-card-content>
     </ion-card-header>
   </ion-card>
+
+  <div class="suggest-movies-container">
+    <h6>More Like This</h6>
+    <div class="suggested-movies">
+      @for (item of similarMovies().results.slice(0, 12); track
+      item.poster_path) {
+
+      <img
+        [src]="imageBaseUrl + '/w400' + item.poster_path"
+        alt="poster"
+        button
+        [routerLink]="['/movie-details/', item.id]"
+      />
+
+      }
+    </div>
+    <div class="similar-movies-pagination-container">
+      <button
+        (click)="changePage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ similarMovies()?.total_pages }}</span>
+      <button
+        (click)="changePage(currentPage + 1)"
+        [disabled]="currentPage === similarMovies()?.total_pages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
   }
 </ion-content>
