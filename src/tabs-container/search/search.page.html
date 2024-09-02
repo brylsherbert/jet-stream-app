@@ -37,7 +37,7 @@
   <ion-list>
     @for (item of this.search_response; track item?.poster_path) { @if
     (item?.backdrop_path) {
-    <ion-item button [routerLink]="['/details', item.id]">
+    <ion-item button [routerLink]="['/movie-details', item.id]">
       <ion-avatar slot="start">
         <img
           alt="search_thumbnail"

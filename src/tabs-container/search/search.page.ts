@@ -88,6 +88,7 @@ export class SearchPage {
   error = null;
   isEmpty: boolean = false;
   isSearching = false;
+  currentSearchQuery: string = '';
 
   public dummyArray = new Array(10);
   constructor() {
@@ -120,6 +121,11 @@ export class SearchPage {
       return;
     }
 
+    if (this.currentSearchQuery !== searchInput) {
+      this.resetSearchResults();
+      this.currentSearchQuery = searchInput; // Update the current search query
+    }
+
     this.movie_service
       .getSearchResponse(this.current_page, searchInput)
       .pipe(
@@ -139,8 +145,12 @@ export class SearchPage {
       )
       .subscribe({
         next: (response) => {
-          this.search_response.push(...response.results);
-          console.log('Search: Response', response);
+          if (this.current_page === 1) {
+            this.search_response = [...response.results];
+          } else {
+            this.search_response.push(...response.results);
+          }
+          console.log('Search: Response response', response);
           console.log('Search: Response', searchInput);
 
           if (response.total_results === 0) {
@@ -165,5 +175,6 @@ export class SearchPage {
     this.current_page = 1;
     this.isLoading = false;
     this.search_response = [];
+    this.isEmpty = false;
   }
 }
