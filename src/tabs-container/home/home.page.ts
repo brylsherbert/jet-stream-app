@@ -19,7 +19,6 @@ import { catchError, finalize } from 'rxjs';
 import { MovieResult } from 'src/app/services/interfaces';
 import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
 import { ModalPage } from 'src/app/modal/modal.page';
-import { ModalController } from '@ionic/angular';
 import { DrawerService } from 'src/app/services/drawer.service';
 import { addIcons } from 'ionicons';
 import {
@@ -57,6 +56,7 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class HomePage {
+  private drawerService = inject(DrawerService);
   public movieService = inject(MovieService);
   public currentPage = 1;
   public error = null;
@@ -70,7 +70,7 @@ export class HomePage {
   public movieGenres: any[] = [];
   activeSlideIndex: number = 0;
 
-  constructor(private drawerService: DrawerService) {
+  constructor() {
     addIcons({
       caretDownOutline,
       menu,
@@ -94,7 +94,6 @@ export class HomePage {
   }
 
   onSlideChangeEnd() {
-    // Reset activeSlideIndex when reaching the end or moving to the next slide
     this.activeSlideIndex = -1;
   }
 

@@ -1,6 +1,8 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-row class="ion-justify-content-center ion-text-center">
+  <ion-toolbar color="transparent" class="header-items-container">
+   
+    <ion-row class="logo-container">
+      
       <ion-col class="ion-text-left" size="4"
         ><ion-icon class="large-icon" name="menu-outline"></ion-icon
       ></ion-col>
@@ -14,18 +16,18 @@
       ></ion-col>
     </ion-row>
 
-    <ion-row class="ion-justify-content-center ion-text-center">
-      <ion-col size="4" class="ion-text-right">TV Shows</ion-col>
-      <ion-col size="4">Movies</ion-col>
+    <ion-row class="menu-category-container">
+      <ion-col>TV Shows</ion-col>
+      <ion-col>Movies</ion-col>
       <ion-col
         size="4"
         tappable
         (click)="openCategories()"
-        class="ion-text-left"
         >Categories
         <ion-icon name="caret-down-outline"></ion-icon>
       </ion-col>
     </ion-row>
+  
   </ion-toolbar>
 </ion-header>
 
