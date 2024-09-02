@@ -39,9 +39,9 @@ export class MovieService {
     );
   }
 
-  getTvShowDetails(id: string): Observable<MovieResult> {
+  getTvShowDetails(id: string, page: number): Observable<MovieResult> {
     return this.http.get<MovieResult>(
-      `${BASE_URL}/tv/${id}?api_key=${API_KEY}`
+      `${BASE_URL}/tv/${id}?api_key=${API_KEY}&page=${page}&append_to_response=videos,images,similar,recommendations,lists,account_states`
     );
   }
 
