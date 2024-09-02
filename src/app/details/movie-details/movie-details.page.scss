@@ -62,6 +62,11 @@ ion-content {
       display: flex;
       flex-direction: column;
       height: 100%;
+      
+      ion-card-title {
+        color: #fff;
+        font-size: 22px;
+      }
 
       .ion-card-title-details {
         display: flex;
@@ -69,9 +74,6 @@ ion-content {
         gap: 5px;
       }
 
-      ion-card-title {
-        font-size: 22px;
-      }
 
       ion-card-subtitle {
         margin: 0;
@@ -80,6 +82,7 @@ ion-content {
 
     ion-card-content {
       margin-top: 10px;
+      padding: 4px;
       width: 100%;
       display: flex;
       flex-direction: column;
