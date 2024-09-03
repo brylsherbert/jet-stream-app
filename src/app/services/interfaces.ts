@@ -1,6 +1,6 @@
-export interface ApiResult {
+export interface ApiResult<T> {
   page: number;
-  results: any[];
+  results: T[];
   total_pages: number;
   total_results: number;
 }
@@ -21,12 +21,13 @@ export interface MovieResult {
   popularity: number;
   poster_path: string;
   production_companies: Productioncompany[];
-  production_countries: any[];
+  production_countries: Productioncountry[];
   release_date: string;
   revenue: number;
   runtime: number;
   spoken_languages: Spokenlanguage[];
-  similar: any[];
+  similar: ApiResult<Similar>;
+  recommendations: ApiResult<Recommendations>;
   status: string;
   tagline: string;
   title: string;
@@ -74,9 +75,9 @@ export interface TvShowResult {
   vote_count: number;
   videos: Videos;
   images: Images;
-  similar: Similar;
-  recommendations: Recommendations;
-  lists: Lists;
+  similar: ApiResult<Similar>;
+  recommendations: ApiResult<Recommendations>;
+  lists: ApiResult<ListsResult>;
 }
 
 export interface UpcomingMoviesResult {
@@ -87,36 +88,13 @@ export interface UpcomingMoviesResult {
   total_results: number;
 }
 
-interface Result {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number | null;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
+// Utility Interfaces
 interface Dates {
   maximum: string;
   minimum: string;
 }
 
-interface Lists {
-  page: number;
-  results: Result4[];
-  total_pages: number;
-  total_results: number;
-}
-
-interface Result4 {
+interface ListsResult {
   description: string;
   favorite_count: number;
   id: number;
@@ -124,17 +102,10 @@ interface Result4 {
   iso_639_1: string;
   iso_3166_1: string;
   name: string;
-  poster_path: null | string;
+  poster_path: string | null;
 }
 
 interface Recommendations {
-  page: number;
-  results: Result3[];
-  total_pages: number;
-  total_results: number;
-}
-
-interface Result3 {
   backdrop_path: string;
   id: number;
   name: string;
@@ -153,13 +124,6 @@ interface Result3 {
 }
 
 interface Similar {
-  page: number;
-  results: Result2[];
-  total_pages: number;
-  total_results: number;
-}
-
-interface Result2 {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -195,7 +159,7 @@ interface Logo {
 interface Backdrop {
   aspect_ratio: number;
   height: number;
-  iso_639_1: null | string;
+  iso_639_1: string | null;
   file_path: string;
   vote_average: number;
   vote_count: number;
@@ -216,7 +180,7 @@ interface Result {
   size: number;
   type: string;
   official: boolean;
-  id: number | null;
+  id: number;
 }
 
 interface Spokenlanguage {
@@ -243,7 +207,7 @@ interface Productioncountry {
 
 interface Productioncompany {
   id: number;
-  logo_path: null | string;
+  logo_path: string | null;
   name: string;
   origin_country: string;
 }
@@ -282,25 +246,7 @@ interface Createdby {
   name: string;
   original_name: string;
   gender: number;
-  profile_path: null | string;
-}
-
-interface Spokenlanguage {
-  english_name: string;
-  iso_639_1: string;
-  name: string;
-}
-
-interface Productioncompany {
-  id: number;
-  logo_path: string | null;
-  name: string;
-  origin_country: string;
-}
-
-interface Genre {
-  id: number;
-  name: string;
+  profile_path: string | null;
 }
 
 interface Belongstocollection {
