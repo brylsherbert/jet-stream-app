@@ -15,12 +15,7 @@ import { MovieService } from 'src/app/services/movie.service';
   templateUrl: 'coming-soon.page.html',
   styleUrls: ['coming-soon.page.scss'],
   standalone: true,
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-  ],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class ComingSoonPage {
   private movieService = inject(MovieService);
@@ -38,7 +33,7 @@ export class ComingSoonPage {
   }
 
   async getUpcomingMovies(event?: InfiniteScrollCustomEvent) {
-    (await this.movieService.getUpcomingMovies(this.currentPage))
+    (await this.movieService.getMovies('upcoming', this.currentPage))
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -63,7 +58,6 @@ export class ComingSoonPage {
             event.target.disabled = res.total_pages === this.currentPage;
           }
         },
-    });
+      });
   }
 }
-
