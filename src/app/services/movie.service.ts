@@ -14,12 +14,15 @@ export class MovieService {
   private http = inject(HttpClient);
   constructor() {}
 
-  async getMovies(
+  getMovies<T>(
     movieType: 'popular' | 'top_rated' | 'now_playing' | 'upcoming',
-    page = 1
-  ): Promise<Observable<ApiResult>> {
+    page: number = 1
+  ): Observable<ApiResult<T>> {
+    // Construct URL
     const url = `${BASE_URL}/movie/${movieType}?page=${page}&api_key=${API_KEY}`;
-    return this.http.get<ApiResult>(url);
+
+    // Return observable
+    return this.http.get<ApiResult<T>>(url);
   }
 
   getMovieDetails(id: string, page: number): Observable<MovieResult> {
@@ -28,15 +31,15 @@ export class MovieService {
     );
   }
 
-  getSearchResponse(page: number, query: string): Observable<ApiResult> {
-    return this.http.get<ApiResult>(
+  getSearchResponse<T>(page: number, query: string): Observable<ApiResult<T>> {
+    return this.http.get<ApiResult<T>>(
       `${BASE_URL}/search/movie?query=${query}&page=${page}&include_adult=false&language=en-US&api_key=${API_KEY}`
     );
     // .pipe(delay(5000));
   }
 
-  getPopularTvShows(): Observable<ApiResult> {
-    return this.http.get<ApiResult>(
+  getPopularTvShows<T>(): Observable<ApiResult<T>> {
+    return this.http.get<ApiResult<T>>(
       `${BASE_URL}/tv/popular?api_key=${API_KEY}`
     );
   }
