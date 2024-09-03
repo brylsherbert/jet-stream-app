@@ -14,21 +14,17 @@ export class MovieService {
   private http = inject(HttpClient);
   constructor() {}
 
-  async getTopRatedMovies(page = 1): Promise<Observable<ApiResult>> {
-    return this.http.get<ApiResult>(
-      `${BASE_URL}/movie/popular?page=${page}&api_key=${API_KEY}`
-    );
-  }
-  
-  async getUpcomingMovies(page = 1): Promise<Observable<ApiResult>> {
-    return this.http.get<ApiResult>(
-      `${BASE_URL}/movie/upcoming?page=${page}&api_key=${API_KEY}`
-    );
+  async getMovies(
+    movieType: 'popular' | 'top_rated' | 'now_playing' | 'upcoming',
+    page = 1
+  ): Promise<Observable<ApiResult>> {
+    const url = `${BASE_URL}/movie/${movieType}?page=${page}&api_key=${API_KEY}`;
+    return this.http.get<ApiResult>(url);
   }
 
   getMovieDetails(id: string, page: number): Observable<MovieResult> {
     return this.http.get<MovieResult>(
-      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&page=${page}&append_to_response=videos,images,similar,recommendations,lists,account_states`
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&page=${page}&append_to_response=videos,images,similar,recommendations,lists`
     );
   }
 
