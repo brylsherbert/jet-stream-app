@@ -45,7 +45,6 @@ import {
   caretForwardCircleOutline,
   playSharp,
 } from 'ionicons/icons';
-import { MovieResult } from '../../services/interfaces';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -86,7 +85,7 @@ export class MovieDetailsPage {
   public currentPage = 1;
   public error = null;
   public isLoading = false;
-  public suggestedMovies: MovieResult[] = [];
+  public similarIsEmpty: boolean = false;
 
   @Input()
   set id(movieId: string) {
@@ -117,9 +116,10 @@ export class MovieDetailsPage {
         console.log(movie);
         this.movie.set(movie);
 
-        const { similar } = movie;
-        console.log(similar);
-        this.similarMovies.set(similar);
+        const { similar, recommendations } = movie;
+
+        this.similarIsEmpty = !similar.results.length;
+        this.similarMovies.set(this.similarIsEmpty ? recommendations : similar);
 
         this.isLoading = false;
       },

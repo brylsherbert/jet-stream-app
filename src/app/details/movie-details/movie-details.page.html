@@ -66,22 +66,22 @@
           </button>
         </div>
 
-        <!-- <div class="ion-items">
-          <ion-item lines="none" class="ion-item-container">
+        <div class="ion-items">
+          <!-- <ion-item lines="none" class="ion-item-container">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
-          </ion-item>
+          </ion-item> -->
 
           <ion-item lines="none">
             <ion-icon name="cash-outline" slot="start"></ion-icon>
             <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
           </ion-item>
-        </div> -->
+        </div>
       </ion-card-content>
     </ion-card-header>
   </ion-card>
   <div class="suggest-movies-container">
-    <h6>More Like This</h6>
+    <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This' }}</h6>
     <div class="suggested-movies">
       @for (item of similarMovies().results.slice(0, 12); track
       item.poster_path) {
