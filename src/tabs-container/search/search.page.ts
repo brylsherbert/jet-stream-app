@@ -127,7 +127,7 @@ export class SearchPage {
     }
 
     this.movie_service
-      .getSearchResponse(this.current_page, searchInput)
+      .getSearchResponse<MovieResult>(this.current_page, searchInput)
       .pipe(
         finalize(() => {
           this.isLoading = false;

@@ -33,7 +33,8 @@ export class ComingSoonPage {
   }
 
   async getUpcomingMovies(event?: InfiniteScrollCustomEvent) {
-    (await this.movieService.getMovies('upcoming', this.currentPage))
+    this.movieService
+      .getMovies<UpcomingMoviesResult>('upcoming', this.currentPage)
       .pipe(
         finalize(() => {
           this.isLoading = false;
