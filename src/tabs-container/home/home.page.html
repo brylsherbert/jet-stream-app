@@ -1,8 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="transparent" class="header-items-container">
-   
     <ion-row class="logo-container">
-      
       <ion-col class="ion-text-left" size="4"
         ><ion-icon class="large-icon" name="menu-outline"></ion-icon
       ></ion-col>
@@ -19,15 +17,11 @@
     <ion-row class="menu-category-container">
       <ion-col>TV Shows</ion-col>
       <ion-col>Movies</ion-col>
-      <ion-col
-        size="4"
-        tappable
-        (click)="openCategories()"
+      <ion-col size="4" tappable (click)="openCategories()"
         >Categories
         <ion-icon name="caret-down-outline"></ion-icon>
       </ion-col>
     </ion-row>
-  
   </ion-toolbar>
 </ion-header>
 
@@ -122,10 +116,14 @@
         button
         [routerLink]="['/show-details', item.id]"
       >
-        <div
-          class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
-        >
+        <div class="swiper-slide-content">
+          <img
+            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            alt="{{item?.title}}"
+            class="slide-image"
+            loading="lazy"
+          />
+          <div class="swiper-lazy-preloader"></div>
           <div class="gradient"></div>
           <div class="info">
             <span class="rating">{{item?.vote_count}}</span>
@@ -138,7 +136,7 @@
 
   <div class="category-container">
     <div class="category-title-container">
-      <h3 class="category-title">Movies 1</h3>
+      <h3 class="category-title">Top Rated Movies</h3>
       <ion-button>See all</ion-button>
     </div>
     <swiper-container
@@ -153,14 +151,18 @@
     >
       <swiper-slide
         class="swiper-slide"
-        *ngFor="let item of movies; let i = index;"
+        *ngFor="let item of topRatedMovies; let i = index;"
         button
         [routerLink]="['/movie-details', item?.id]"
       >
-        <div
-          class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
-        >
+        <div class="swiper-slide-content">
+          <img
+            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            alt="{{item?.title}}"
+            class="slide-image"
+            loading="lazy"
+          />
+          <div class="swiper-lazy-preloader"></div>
           <div class="gradient"></div>
           <div class="info">
             <span class="rating">{{item?.vote_count}}</span>
@@ -173,7 +175,7 @@
 
   <div class="category-container">
     <div class="category-title-container">
-      <h3 class="category-title">Movies 2</h3>
+      <h3 class="category-title">Popular Movies</h3>
       <ion-button>See all</ion-button>
     </div>
     <swiper-container
@@ -190,12 +192,17 @@
     >
       <swiper-slide
         class="swiper-slide"
-        *ngFor="let item of movies; let i = index;"
+        *ngFor="let item of popularMovies; let i = index;"
+        [routerLink]="['/movie-details', item?.id]"
       >
-        <div
-          class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
-        >
+        <div class="swiper-slide-content">
+          <img
+            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            alt="{{item?.title}}"
+            class="slide-image"
+            loading="lazy"
+          />
+          <div class="swiper-lazy-preloader"></div>
           <div class="gradient"></div>
           <div class="info">
             <span class="rating">{{item?.vote_count}}</span>
@@ -208,7 +215,7 @@
 
   <div class="category-container">
     <div class="category-title-container">
-      <h3 class="category-title">Movies 3</h3>
+      <h3 class="category-title">Now Playing Movies</h3>
       <ion-button>See all</ion-button>
     </div>
     <swiper-container
@@ -225,12 +232,17 @@
     >
       <swiper-slide
         class="swiper-slide"
-        *ngFor="let item of movies; let i = index;"
+        *ngFor="let item of nowPlayingMovies; let i = index;"
+        [routerLink]="['/movie-details', item?.id]"
       >
-        <div
-          class="swiper-slides"
-          [style.background]="'url('+imageBaseUrl+'/w500'+item?.poster_path+') no-repeat top center / contain'"
-        >
+        <div class="swiper-slide-content">
+          <img
+            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            alt="{{item?.title}}"
+            class="slide-image"
+            loading="lazy"
+          />
+          <div class="swiper-lazy-preloader"></div>
           <div class="gradient"></div>
           <div class="info">
             <span class="rating">{{item?.vote_count}}</span>
