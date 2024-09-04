@@ -44,6 +44,7 @@ import {
   cashOutline,
   caretForwardCircleOutline,
   playSharp,
+  chevronBack,
 } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
 
@@ -107,6 +108,7 @@ export class MovieDetailsPage {
       cashOutline,
       caretForwardCircleOutline,
       playSharp,
+      chevronBack,
     });
   }
 

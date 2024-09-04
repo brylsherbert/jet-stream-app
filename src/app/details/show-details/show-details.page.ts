@@ -24,7 +24,9 @@ import {
   IonLabel,
   IonItem,
   IonIcon,
-  IonAvatar, IonButton } from '@ionic/angular/standalone';
+  IonAvatar,
+  IonButton,
+} from '@ionic/angular/standalone';
 
 import { MovieService } from '../../services/movie.service';
 import { addIcons } from 'ionicons';
@@ -42,6 +44,7 @@ import {
   cashOutline,
   caretForwardCircleOutline,
   playSharp,
+  chevronBack,
 } from 'ionicons/icons';
 import { MovieResult } from 'src/app/services/interfaces';
 import { RouterModule } from '@angular/router';
@@ -51,7 +54,8 @@ import { RouterModule } from '@angular/router';
   templateUrl: './show-details.page.html',
   styleUrls: ['./show-details.page.scss'],
   standalone: true,
-  imports: [IonButton, 
+  imports: [
+    IonButton,
     IonAvatar,
     IonIcon,
     IonItem,
@@ -70,7 +74,7 @@ import { RouterModule } from '@angular/router';
     IonToolbar,
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class ShowDetailsPage {
@@ -105,6 +109,7 @@ export class ShowDetailsPage {
       cashOutline,
       caretForwardCircleOutline,
       playSharp,
+      chevronBack,
     });
   }
 
