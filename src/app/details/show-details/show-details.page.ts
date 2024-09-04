@@ -96,21 +96,7 @@ export class ShowDetailsPage {
   }
 
   constructor() {
-    addIcons({
-      caretDownOutline,
-      menu,
-      menuOutline,
-      settings,
-      settingsOutline,
-      add,
-      informationCircleOutline,
-      play,
-      calendarOutline,
-      cashOutline,
-      caretForwardCircleOutline,
-      playSharp,
-      chevronBack,
-    });
+    addIcons({playSharp});
   }
 
   fetchTvShowDetails(showId: string, page: number): void {
