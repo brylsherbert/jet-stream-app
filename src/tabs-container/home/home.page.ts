@@ -50,10 +50,10 @@ import { RouterModule } from '@angular/router';
     IonToolbar,
     IonTitle,
     IonContent,
-    SharedDirectivesModule,
     ModalPage,
     CommonModule,
     RouterModule,
+    SharedDirectivesModule,
   ],
 })
 export class HomePage implements OnInit {
@@ -75,14 +75,12 @@ export class HomePage implements OnInit {
 
   constructor() {
     addIcons({
-      caretDownOutline,
-      menu,
       menuOutline,
       settings,
-      settingsOutline,
+      caretDownOutline,
       add,
-      informationCircleOutline,
       play,
+      informationCircleOutline,
     });
   }
 
