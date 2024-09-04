@@ -31,21 +31,7 @@ import {
 import { MovieService } from '../../services/movie.service';
 
 import { addIcons } from 'ionicons';
-import {
-  caretDownOutline,
-  menu,
-  menuOutline,
-  settings,
-  settingsOutline,
-  add,
-  informationCircleOutline,
-  play,
-  calendarOutline,
-  cashOutline,
-  caretForwardCircleOutline,
-  playSharp,
-  chevronBack,
-} from 'ionicons/icons';
+import { cashOutline, playSharp } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -95,21 +81,7 @@ export class MovieDetailsPage {
   }
 
   constructor() {
-    addIcons({
-      caretDownOutline,
-      menu,
-      menuOutline,
-      settings,
-      settingsOutline,
-      add,
-      informationCircleOutline,
-      play,
-      calendarOutline,
-      cashOutline,
-      caretForwardCircleOutline,
-      playSharp,
-      chevronBack,
-    });
+    addIcons({ playSharp, cashOutline });
   }
 
   fetchMovieDetails(movieId: string, page: number): void {
