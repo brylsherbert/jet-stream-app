@@ -1,0 +1,30 @@
+.suggest-movies-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .suggested-movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 20px 10px;
+
+    .suggest-movies-thumbnail-container {
+      width: 30%;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+
+      gap: 5px;
+
+      img {
+        border-radius: 5px;
+        object-fit: cover;
+      }
+      span {
+        font-size: 10px;
+      }
+    }
+  }
+}

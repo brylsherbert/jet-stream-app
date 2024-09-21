@@ -95,10 +95,59 @@
     </swiper-slide>
   </swiper-container>
 
-  <div class="category-container">
+  <div
+    class="category-container now-playing-movies"
+    *ngIf="nowPlayingMovies.length"
+  >
+    <div class="category-title-container">
+      <h3 class="category-title">Now Playing Movies</h3>
+      <ion-button
+        (click)="seeAllCategoryData(nowPlayingMovies, 'Now Playing Movies')"
+        >See all</ion-button
+      >
+    </div>
+    <swiper-container
+      class="movies-container"
+      effect="card"
+      alt="poster"
+      [slidesPerView]="3.3"
+      [spaceBetween]="5"
+      autoplay
+      [autoplay]="{delay: 2000}"
+      direction="horizontal"
+      parallax="true"
+      speed="1000"
+    >
+      <swiper-slide
+        class="swiper-slide"
+        *ngFor="let item of nowPlayingMovies; let i = index;"
+        [routerLink]="['/movie-details', item?.id]"
+      >
+        <div class="swiper-slide-content">
+          <img
+            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            alt="{{item?.title}}"
+            class="slide-image"
+            loading="lazy"
+          />
+          <div class="swiper-lazy-preloader"></div>
+          <div class="gradient"></div>
+          <div class="info">
+            <span class="rating">{{item?.vote_count}}</span>
+          </div>
+        </div>
+        <p class="video-title">{{item?.title}}</p>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <div class="category-container top-rated-tv-shows">
     <div class="category-title-container">
       <h3 class="category-title">Trending TV Shows</h3>
-      <ion-button>See all</ion-button>
+      <ion-button
+        (click)="seeAllCategoryData(topRatedTvShows, 'Trending TV Shows')"
+        >See all</ion-button
+      >
     </div>
     <swiper-container
       class="movies-container"
@@ -136,10 +185,13 @@
     </swiper-container>
   </div>
 
-  <div class="category-container">
+  <div class="category-container top-rated-movies">
     <div class="category-title-container">
       <h3 class="category-title">Top Rated Movies</h3>
-      <ion-button>See all</ion-button>
+      <ion-button
+        (click)="seeAllCategoryData(topRatedMovies, 'Top Rated Movies')"
+        >See all</ion-button
+      >
     </div>
     <swiper-container
       class="movies-container"
@@ -177,10 +229,12 @@
     </swiper-container>
   </div>
 
-  <div class="category-container">
+  <div class="category-container popular-movies">
     <div class="category-title-container">
       <h3 class="category-title">Popular Movies</h3>
-      <ion-button>See all</ion-button>
+      <ion-button (click)="seeAllCategoryData(popularMovies, 'Popular Movies')"
+        >See all</ion-button
+      >
     </div>
     <swiper-container
       class="movies-container"
@@ -197,46 +251,6 @@
       <swiper-slide
         class="swiper-slide"
         *ngFor="let item of popularMovies; let i = index;"
-        [routerLink]="['/movie-details', item?.id]"
-      >
-        <div class="swiper-slide-content">
-          <img
-            [src]="imageBaseUrl + '/w500' + item?.poster_path"
-            alt="{{item?.title}}"
-            class="slide-image"
-            loading="lazy"
-          />
-          <div class="swiper-lazy-preloader"></div>
-          <div class="gradient"></div>
-          <div class="info">
-            <span class="rating">{{item?.vote_count}}</span>
-          </div>
-        </div>
-        <p class="video-title">{{item?.title}}</p>
-      </swiper-slide>
-    </swiper-container>
-  </div>
-
-  <div class="category-container">
-    <div class="category-title-container">
-      <h3 class="category-title">Now Playing Movies</h3>
-      <ion-button>See all</ion-button>
-    </div>
-    <swiper-container
-      class="movies-container"
-      effect="card"
-      alt="poster"
-      [slidesPerView]="3.3"
-      [spaceBetween]="5"
-      autoplay
-      [autoplay]="{delay: 2000}"
-      direction="horizontal"
-      parallax="true"
-      speed="1000"
-    >
-      <swiper-slide
-        class="swiper-slide"
-        *ngFor="let item of nowPlayingMovies; let i = index;"
         [routerLink]="['/movie-details', item?.id]"
       >
         <div class="swiper-slide-content">

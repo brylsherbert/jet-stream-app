@@ -34,7 +34,7 @@ import {
 } from 'ionicons/icons';
 
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -72,6 +72,7 @@ export class HomePage implements OnInit {
   public topRatedTvShows: MovieResult[] = [];
   public movieGenres: any[] = [];
   activeSlideIndex: number = 0;
+  public router = inject(Router);
 
   constructor() {
     addIcons({
@@ -211,5 +212,11 @@ export class HomePage implements OnInit {
 
   onSlideChangeEnd() {
     this.activeSlideIndex = -1;
+  }
+
+  seeAllCategoryData(data: any, catTitle: string) {
+    this.router.navigate(['/category-details'], {
+      state: { data: JSON.stringify(data), categoryTitle: catTitle },
+    });
   }
 }
