@@ -45,7 +45,7 @@
     >
       <div
         class="swiper-slides"
-        [style.background]="'url('+imageBaseUrl+'/original'+(this.platform === 'web' ? item?.backdrop_path : item?.poster_path)+') no-repeat center center / '+objectFit+''"
+        [style.background]="'url('+imageBaseUrl+''+spotlightImageSize+''+(this.platform === 'web' ? item?.backdrop_path : item?.poster_path)+') no-repeat center center / '+objectFit+''"
         [style.height]="spotlightHeight"
       >
         <div class="gradient">
@@ -126,7 +126,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
@@ -170,7 +170,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
@@ -214,7 +214,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
@@ -256,7 +256,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + '/w500' + item?.poster_path"
+            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"

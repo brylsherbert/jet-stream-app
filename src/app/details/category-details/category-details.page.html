@@ -12,7 +12,7 @@
       <div class="suggest-movies-thumbnail-container">
         @if(!item?.first_air_date) {
         <img
-          [src]="imageBaseUrl + '/w500' + item.poster_path"
+          [src]="imageBaseUrl + '/w154' + item.poster_path"
           alt="poster"
           button
           [routerLink]="['/movie-details/', item.id]"

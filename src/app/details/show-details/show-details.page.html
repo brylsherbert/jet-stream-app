@@ -18,7 +18,7 @@
       <div
         class="thumbnail"
         [style.height.px]="360"
-        [style.background]="'url('+ imageBaseUrl + '/w400' + tvShow?.poster_path +') no-repeat center center / cover'"
+        [style.background]="'url('+ imageBaseUrl + '/w154' + tvShow?.poster_path +') no-repeat center center / cover'"
       ></div>
       <div class="poster-container" [style.height.px]="300">
         <img
@@ -82,13 +82,13 @@
   </ion-card>
 
   <div class="suggest-movies-container">
-    <h6>More Like This</h6>
+    <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This'}}</h6>
     <div class="suggested-movies">
-      @for (item of similarMovies().results.slice(0, 12); track
+      @for (item of similarMovies().results.slice(0, similarVideosLength); track
       item.poster_path) {
 
       <img
-        [src]="imageBaseUrl + '/w400' + item.poster_path"
+        [src]="imageBaseUrl + '/w154' + item.poster_path"
         alt="poster"
         button
         [routerLink]="['/show-details/', item.id]"

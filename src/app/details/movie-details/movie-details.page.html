@@ -23,7 +23,7 @@
       <div class="poster-container" [style.height.px]="300">
         <img
           [style.height.px]="300"
-          [src]="imageBaseUrl + '/w500' + movie?.poster_path"
+          [src]="imageBaseUrl + '/w154' + movie?.poster_path"
           alt="poster"
         />
       </div>
@@ -86,11 +86,11 @@
   <div class="suggest-movies-container">
     <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This' }}</h6>
     <div class="suggested-movies">
-      @for (item of similarMovies().results.slice(0, 12); track
+      @for (item of similarMovies().results.slice(0, similarVideosLength); track
       item.poster_path) {
 
       <img
-        [src]="imageBaseUrl + '/w400' + item.poster_path"
+        [src]="imageBaseUrl + '/w154' + item.poster_path"
         alt="poster"
         button
         [routerLink]="['/movie-details/', item.id]"

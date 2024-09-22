@@ -48,6 +48,7 @@ import {
 } from 'ionicons/icons';
 import { MovieResult } from 'src/app/services/interfaces';
 import { RouterModule } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-show-details',
@@ -82,11 +83,15 @@ export class ShowDetailsPage {
   public imageBaseUrl = 'https://image.tmdb.org/t/p';
   public tvShow: WritableSignal<MovieService | any> = signal(null);
   public similarMovies: WritableSignal<MovieService | any> = signal(null);
+  public similarIsEmpty: boolean = false;
   isExpanded: boolean = false;
   public currentPage = 1;
   public error = null;
   public isLoading = false;
   public suggestedMovies: MovieResult[] = [];
+  private capacitor = Capacitor;
+  platform = this.capacitor.getPlatform();
+  similarVideosLength = this.getDynamicSimilarVideosLength();
 
   @Input()
   set id(showId: string) {
@@ -96,7 +101,7 @@ export class ShowDetailsPage {
   }
 
   constructor() {
-    addIcons({playSharp});
+    addIcons({ playSharp });
   }
 
   fetchTvShowDetails(showId: string, page: number): void {
@@ -105,9 +110,10 @@ export class ShowDetailsPage {
         console.log(tvShow);
         this.tvShow.set(tvShow);
 
-        const { similar } = tvShow;
+        const { similar, recommendations } = tvShow;
         console.log(similar);
-        this.similarMovies.set(similar);
+        this.similarIsEmpty = !similar.results.length;
+        this.similarMovies.set(this.similarIsEmpty ? recommendations : similar);
 
         this.isLoading = false;
       },
@@ -129,5 +135,13 @@ export class ShowDetailsPage {
 
   toggleText() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  getDynamicSimilarVideosLength() {
+    if (this.platform === 'web') {
+      return 20;
+    } else {
+      return 12;
+    }
   }
 }

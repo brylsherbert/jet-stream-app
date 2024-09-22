@@ -79,6 +79,7 @@ export class HomePage implements OnInit {
   slidesPerView = this.getSlidesPerView();
   objectFit = this.getImageObjectFit();
   spotlightHeight = this.getSpotlightContainerHeight();
+  spotlightImageSize = this.getImageSize();
 
   constructor() {
     addIcons({
@@ -96,6 +97,7 @@ export class HomePage implements OnInit {
     console.log('Slides Per View: ', this.slidesPerView);
     console.log('Object Fit: ', this.objectFit);
     console.log('Spotlight Height: ', this.spotlightHeight);
+    console.log('Spotlight Image Size: ', this.spotlightImageSize);
     this.loadMovies('popular');
     this.loadMovies('top_rated');
     this.loadMovies('now_playing');
@@ -232,7 +234,7 @@ export class HomePage implements OnInit {
 
   getSlidesPerView() {
     if (this.platform === 'web') {
-      return 6;
+      return 9;
     } else {
       return 3.3;
     }
@@ -242,7 +244,7 @@ export class HomePage implements OnInit {
     if (this.platform === 'web') {
       return '95vh';
     } else {
-      return '400px';
+      return '75vh';
     }
   }
 
@@ -254,11 +256,11 @@ export class HomePage implements OnInit {
     }
   }
 
-  // getImageDisplay() {
-  //   if (this.platform === 'web') {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  getImageSize() {
+    if (this.platform === 'web') {
+      return '/w780';
+    } else {
+      return '/w154';
+    }
+  }
 }

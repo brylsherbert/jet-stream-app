@@ -33,6 +33,7 @@ import { MovieService } from '../../services/movie.service';
 import { addIcons } from 'ionicons';
 import { cashOutline, playSharp } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-movie-details',
@@ -73,6 +74,9 @@ export class MovieDetailsPage {
   public error = null;
   public isLoading = false;
   public similarIsEmpty: boolean = false;
+  private capacitor = Capacitor;
+  platform = this.capacitor.getPlatform();
+  similarVideosLength = this.getDynamicSimilarVideosLength();
 
   @Input()
   set id(movieId: string) {
@@ -115,5 +119,13 @@ export class MovieDetailsPage {
 
   toggleText() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  getDynamicSimilarVideosLength() {
+    if (this.platform === 'web') {
+      return 20;
+    } else {
+      return 12;
+    }
   }
 }
