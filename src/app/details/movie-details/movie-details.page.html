@@ -18,12 +18,12 @@
       <div
         class="thumbnail"
         [style.height.px]="360"
-        [style.background]="'url('+ imageBaseUrl + '/w400' + movie?.poster_path +') no-repeat center center / cover'"
+        [style.background]="'url('+ imageBaseUrl + '/w154' + movie?.poster_path +') no-repeat center center / cover'"
       ></div>
       <div class="poster-container" [style.height.px]="300">
         <img
           [style.height.px]="300"
-          [src]="imageBaseUrl + '/w154' + movie?.poster_path"
+          [src]="imageBaseUrl + '/w500' + movie?.poster_path"
           alt="poster"
         />
       </div>
@@ -90,7 +90,7 @@
       item.poster_path) {
 
       <img
-        [src]="imageBaseUrl + '/w154' + item.poster_path"
+        [src]="imageBaseUrl + '/w300' + item.poster_path"
         alt="poster"
         button
         [routerLink]="['/movie-details/', item.id]"

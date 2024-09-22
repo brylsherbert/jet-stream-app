@@ -30,6 +30,7 @@ import {
   add,
   informationCircleOutline,
   play,
+  chevronForward,
 } from 'ionicons/icons';
 
 import { CommonModule } from '@angular/common';
@@ -79,6 +80,7 @@ export class HomePage implements OnInit {
   objectFit: string = '';
   spotlightHeight: string = '';
   spotlightImageSize: string = '';
+  thumbnailSize: string = '';
 
   constructor() {
     addIcons({
@@ -88,6 +90,7 @@ export class HomePage implements OnInit {
       add,
       play,
       informationCircleOutline,
+      chevronForward,
     });
   }
 
@@ -98,6 +101,7 @@ export class HomePage implements OnInit {
     console.log('Object Fit: ', this.objectFit);
     console.log('Spotlight Height: ', this.spotlightHeight);
     console.log('Spotlight Image Size: ', this.spotlightImageSize);
+    console.log('Thumbnail Image Size: ', this.thumbnailSize);
     this.loadMovies('popular');
     this.loadMovies('top_rated');
     this.loadMovies('now_playing');
@@ -245,7 +249,7 @@ export class HomePage implements OnInit {
       if (this.platform === 'web') {
         this.spotlightHeight = '95vh';
       } else {
-        this.spotlightHeight = '75vh';
+        this.spotlightHeight = '80vh';
       }
     };
 
@@ -255,9 +259,17 @@ export class HomePage implements OnInit {
 
     const getImageSize = async () => {
       if (this.platform === 'web') {
-        this.spotlightImageSize = '/w780';
+        this.spotlightImageSize = '/w1280';
       } else {
-        this.spotlightImageSize = '/w154';
+        this.spotlightImageSize = '/w780';
+      }
+    };
+
+    const getThubmnailSize = async () => {
+      if (this.platform === 'web') {
+        this.thumbnailSize = '/w780';
+      } else {
+        this.thumbnailSize = '/w342';
       }
     };
 
@@ -266,6 +278,7 @@ export class HomePage implements OnInit {
       getSpotlightContainerHeight(),
       getImageObjectFit(),
       getImageSize(),
+      getThubmnailSize(),
     ]);
   }
 }

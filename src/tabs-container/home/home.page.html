@@ -103,9 +103,11 @@
     <div class="category-title-container">
       <h3 class="category-title">Now Playing Movies</h3>
       <ion-button
+        class="see-all-button"
         (click)="seeAllCategoryData(nowPlayingMovies, 'Now Playing Movies')"
-        >See all</ion-button
-      >
+        >See all
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
     </div>
     <swiper-container
       class="movies-container"
@@ -126,7 +128,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
+            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
@@ -146,9 +148,11 @@
     <div class="category-title-container">
       <h3 class="category-title">Trending TV Shows</h3>
       <ion-button
+        class="see-all-button"
         (click)="seeAllCategoryData(topRatedTvShows, 'Trending TV Shows')"
-        >See all</ion-button
-      >
+        >See all
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
     </div>
     <swiper-container
       class="movies-container"
@@ -170,7 +174,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
+            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
@@ -190,9 +194,10 @@
     <div class="category-title-container">
       <h3 class="category-title">Top Rated Movies</h3>
       <ion-button
+        class="see-all-button"
         (click)="seeAllCategoryData(topRatedMovies, 'Top Rated Movies')"
-        >See all</ion-button
-      >
+        >See all <ion-icon name="chevron-forward"></ion-icon
+      ></ion-button>
     </div>
     <swiper-container
       class="movies-container"
@@ -214,7 +219,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
+            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
@@ -233,9 +238,11 @@
   <div class="category-container popular-movies">
     <div class="category-title-container">
       <h3 class="category-title">Popular Movies</h3>
-      <ion-button (click)="seeAllCategoryData(popularMovies, 'Popular Movies')"
-        >See all</ion-button
-      >
+      <ion-button
+        class="see-all-button"
+        (click)="seeAllCategoryData(popularMovies, 'Popular Movies')"
+        >See all <ion-icon name="chevron-forward"></ion-icon
+      ></ion-button>
     </div>
     <swiper-container
       class="movies-container"
@@ -256,7 +263,7 @@
       >
         <div class="swiper-slide-content">
           <img
-            [src]="imageBaseUrl + ''+spotlightImageSize+'' + item?.poster_path"
+            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
             alt="{{item?.title}}"
             class="slide-image"
             loading="lazy"
