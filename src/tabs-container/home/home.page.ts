@@ -2,7 +2,6 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   OnInit,
-  ViewChild,
   inject,
 } from '@angular/core';
 import {
@@ -76,10 +75,10 @@ export class HomePage implements OnInit {
   public router = inject(Router);
   private capacitor = Capacitor;
   platform = this.capacitor.getPlatform();
-  slidesPerView = this.getSlidesPerView();
-  objectFit = this.getImageObjectFit();
-  spotlightHeight = this.getSpotlightContainerHeight();
-  spotlightImageSize = this.getImageSize();
+  slidesPerView: number = 3.3;
+  objectFit: string = '';
+  spotlightHeight: string = '';
+  spotlightImageSize: string = '';
 
   constructor() {
     addIcons({
@@ -92,7 +91,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.initializePlatform();
     console.log('Platform: ', this.platform);
     console.log('Slides Per View: ', this.slidesPerView);
     console.log('Object Fit: ', this.objectFit);
@@ -232,35 +232,40 @@ export class HomePage implements OnInit {
     });
   }
 
-  getSlidesPerView() {
-    if (this.platform === 'web') {
-      return 9;
-    } else {
-      return 3.3;
-    }
-  }
+  async initializePlatform() {
+    const getSlidesPerView = async () => {
+      if (this.platform === 'web') {
+        this.slidesPerView = 9;
+      } else {
+        this.slidesPerView = 3.3;
+      }
+    };
 
-  getSpotlightContainerHeight() {
-    if (this.platform === 'web') {
-      return '95vh';
-    } else {
-      return '75vh';
-    }
-  }
+    const getSpotlightContainerHeight = async () => {
+      if (this.platform === 'web') {
+        this.spotlightHeight = '95vh';
+      } else {
+        this.spotlightHeight = '75vh';
+      }
+    };
 
-  getImageObjectFit() {
-    if (this.platform === 'web') {
-      return 'cover';
-    } else {
-      return 'cover';
-    }
-  }
+    const getImageObjectFit = async () => {
+      this.objectFit = 'cover'; // Same for both platforms
+    };
 
-  getImageSize() {
-    if (this.platform === 'web') {
-      return '/w780';
-    } else {
-      return '/w154';
-    }
+    const getImageSize = async () => {
+      if (this.platform === 'web') {
+        this.spotlightImageSize = '/w780';
+      } else {
+        this.spotlightImageSize = '/w154';
+      }
+    };
+
+    await Promise.all([
+      getSlidesPerView(),
+      getSpotlightContainerHeight(),
+      getImageObjectFit(),
+      getImageSize(),
+    ]);
   }
 }
