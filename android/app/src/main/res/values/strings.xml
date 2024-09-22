@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Jet Stream</string>
+    <string name="title_activity_main">Jet Stream</string>
+    <string name="package_name">com.jetstream.mobile</string>
+    <string name="custom_url_scheme">com.jetstream.mobile</string>
+</resources>
