@@ -45,7 +45,8 @@
     >
       <div
         class="swiper-slides"
-        [style.background]="'url('+imageBaseUrl+'/original'+item?.poster_path+') no-repeat top center / cover'"
+        [style.background]="'url('+imageBaseUrl+'/original'+(this.platform === 'web' ? item?.backdrop_path : item?.poster_path)+') no-repeat center center / '+objectFit+''"
+        [style.height]="spotlightHeight"
       >
         <div class="gradient">
           <div class="info">
@@ -110,7 +111,7 @@
       class="movies-container"
       effect="card"
       alt="poster"
-      [slidesPerView]="3.3"
+      [slidesPerView]="slidesPerView"
       [spaceBetween]="5"
       autoplay
       [autoplay]="{delay: 2000}"
@@ -153,7 +154,7 @@
       class="movies-container"
       effect="card"
       alt="poster"
-      [slidesPerView]="3.3"
+      [slidesPerView]="slidesPerView"
       [spaceBetween]="5"
       direction="horizontal"
       parallax="true"
@@ -197,7 +198,7 @@
       class="movies-container"
       effect="card"
       alt="poster"
-      [slidesPerView]="3.3"
+      [slidesPerView]="slidesPerView"
       [spaceBetween]="5"
       direction="horizontal"
       parallax="true"
@@ -240,7 +241,7 @@
       class="movies-container"
       effect="card"
       alt="poster"
-      [slidesPerView]="3.3"
+      [slidesPerView]="slidesPerView"
       [spaceBetween]="5"
       autoplay
       [autoplay]="{delay: 1800}"

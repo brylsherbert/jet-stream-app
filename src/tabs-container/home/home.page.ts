@@ -35,6 +35,7 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-home',
@@ -73,6 +74,11 @@ export class HomePage implements OnInit {
   public movieGenres: any[] = [];
   activeSlideIndex: number = 0;
   public router = inject(Router);
+  private capacitor = Capacitor;
+  platform = this.capacitor.getPlatform();
+  slidesPerView = this.getSlidesPerView();
+  objectFit = this.getImageObjectFit();
+  spotlightHeight = this.getSpotlightContainerHeight();
 
   constructor() {
     addIcons({
@@ -86,6 +92,10 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('Platform: ', this.platform);
+    console.log('Slides Per View: ', this.slidesPerView);
+    console.log('Object Fit: ', this.objectFit);
+    console.log('Spotlight Height: ', this.spotlightHeight);
     this.loadMovies('popular');
     this.loadMovies('top_rated');
     this.loadMovies('now_playing');
@@ -219,4 +229,36 @@ export class HomePage implements OnInit {
       state: { data: JSON.stringify(data), categoryTitle: catTitle },
     });
   }
+
+  getSlidesPerView() {
+    if (this.platform === 'web') {
+      return 6;
+    } else {
+      return 3.3;
+    }
+  }
+
+  getSpotlightContainerHeight() {
+    if (this.platform === 'web') {
+      return '95vh';
+    } else {
+      return '400px';
+    }
+  }
+
+  getImageObjectFit() {
+    if (this.platform === 'web') {
+      return 'cover';
+    } else {
+      return 'cover';
+    }
+  }
+
+  // getImageDisplay() {
+  //   if (this.platform === 'web') {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }
