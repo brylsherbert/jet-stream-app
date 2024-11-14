@@ -80,14 +80,6 @@ export interface TvShowResult {
   lists: ApiResult<ListsResult>;
 }
 
-export interface UpcomingMoviesResult {
-  dates: Dates;
-  page: number;
-  results: Result[];
-  total_pages: number;
-  total_results: number;
-}
-
 // Utility Interfaces
 interface Dates {
   maximum: string;
@@ -254,4 +246,29 @@ interface Belongstocollection {
   name: string;
   poster_path: string;
   backdrop_path: string;
+}
+
+export interface UpcomingMoviesResult<T> {
+  dates: Dates;
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface UpcomingMoviesData {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }

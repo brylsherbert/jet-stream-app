@@ -1,15 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title> Upcoming Movies </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <div class="upcoming-movies-container">
+      <ion-row class="upcoming-movies" *ngFor="let item of this.upcomingMovies">
+        <img
+          [src]="imageBaseUrl + ''+'/original'+'' + item?.backdrop_path"
+          alt="{{item?.title}}"
+          class="slide-image"
+          loading="lazy"
+        />
+        <h5>{{item?.title}}</h5>
+        <p>{{item?.overview}}</p>
+      </ion-row>
+    </div>
+  </ion-grid>
 </ion-content>
