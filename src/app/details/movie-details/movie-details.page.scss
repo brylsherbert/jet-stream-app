@@ -1,3 +1,16 @@
+// Define variables
+$white: #ffffff;
+$font-size-small: 0.7rem;
+$font-size-medium: 0.9rem;
+$font-weight-medium: 500;
+
+// Mixin for text ellipsis (already defined)
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 ion-header {
   .back-button {
     position: absolute;
@@ -155,6 +168,46 @@ ion-content {
       align-items: center;
       gap: 10px;
       padding: 8px;
+    }
+  }
+
+  .cast-container {
+    .cast-swiper-container {
+      text-align: center;
+      .swiper-slide {
+        .swiper-slide-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .cast-image-container {
+            margin-bottom: 10px;
+            .cast-image {
+              object-fit: cover;
+            }
+          }
+
+          .cast-info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 100px;
+
+            .cast-actor-name {
+              @include text-ellipsis();
+              color: $white;
+              font-weight: $font-weight-medium;
+              font-size: $font-size-medium;
+            }
+
+            .cast-character-name {
+              @include text-ellipsis();
+              font-size: $font-size-small;
+            }
+          }
+        }
+      }
     }
   }
 }

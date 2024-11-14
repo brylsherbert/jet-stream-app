@@ -1,4 +1,5 @@
 import {
+  CUSTOM_ELEMENTS_SCHEMA,
   Component,
   Input,
   WritableSignal,
@@ -24,14 +25,17 @@ import {
   IonCardContent,
   IonCardHeader,
   IonButton,
-  InfiniteScrollCustomEvent,
   IonAvatar,
   IonBadge,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../../services/movie.service';
+import { TmdbService } from 'src/app/services/tmdb.service';
 
 import { addIcons } from 'ionicons';
-import { cashOutline, playSharp } from 'ionicons/icons';
+import { cashOutline, heart, heartOutline, playSharp } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 
@@ -41,6 +45,9 @@ import { Capacitor } from '@capacitor/core';
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
   imports: [
+    IonCol,
+    IonRow,
+    IonGrid,
     IonBadge,
     IonAvatar,
     IonButton,
@@ -63,8 +70,10 @@ import { Capacitor } from '@capacitor/core';
     FormsModule,
     RouterModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MovieDetailsPage {
+  private tmdbService = inject(TmdbService);
   private movieService = inject(MovieService);
   public imageBaseUrl = 'https://image.tmdb.org/t/p';
   public movie: WritableSignal<MovieService | any> = signal(null);
@@ -77,6 +86,8 @@ export class MovieDetailsPage {
   private capacitor = Capacitor;
   platform = this.capacitor.getPlatform();
   similarVideosLength = this.getDynamicSimilarVideosLength();
+  sessionId: any;
+  accountDetails: any;
 
   @Input()
   set id(movieId: string) {
@@ -85,7 +96,10 @@ export class MovieDetailsPage {
   }
 
   constructor() {
-    addIcons({ playSharp, cashOutline });
+    addIcons({ playSharp, cashOutline, heartOutline, heart });
+
+    this.accountDetails = this.tmdbService.accountDetails()?.id;
+    console.log('Account Details: ', this.accountDetails);
   }
 
   fetchMovieDetails(movieId: string, page: number): void {
@@ -127,5 +141,34 @@ export class MovieDetailsPage {
     } else {
       return 12;
     }
+  }
+
+  // Method to toggle favorite status
+  toggleFavorite(movieId: number) {
+    const isCurrentlyFavorite = this.tmdbService
+      .favorites()
+      .some((favorite) => favorite.id === movieId);
+    this.tmdbService
+      .markAsFavorite(
+        this.tmdbService.accountDetails()?.id,
+        'movie',
+        movieId,
+        !isCurrentlyFavorite
+      )
+      .subscribe({
+        next: () => {
+          this.tmdbService.loadFavorites(); // Reload favorites to update the list
+        },
+        error: (error) => {
+          console.error('Failed to toggle favorite:', error);
+        },
+      });
+  }
+
+  // Check if the movie is already a favorite
+  isFavorite(movieId: number): boolean {
+    return this.tmdbService
+      .favorites()
+      .some((favorite) => favorite.id === movieId);
   }
 }

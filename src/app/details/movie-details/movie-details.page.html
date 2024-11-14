@@ -44,6 +44,15 @@
           ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
           >Play</ion-button
         >
+
+        <ion-icon
+          [name]="isFavorite(movie?.id) ? 'heart' : 'heart-outline'"
+          slot="start"
+          color="danger"
+          size="large"
+          *ngIf="this.accountDetails"
+          (click)="toggleFavorite(movie?.id)"
+        ></ion-icon>
       </div>
 
       <ion-card-content class="ion-no-padding">
@@ -82,6 +91,48 @@
         </div>
       </ion-card-content>
     </ion-card-header>
+
+    <ion-grid fixed class="cast-container">
+      <ion-label>
+        <h1 class="ion-padding">Cast</h1>
+      </ion-label>
+      <swiper-container
+        class="cast-swiper-container"
+        effect="card"
+        alt="poster"
+        [slidesPerView]="3.5"
+        [spaceBetween]="10"
+        direction="horizontal"
+        parallax="true"
+        speed="1000"
+      >
+        <!-- [slidesOffsetBefore]="16"
+        [slidesOffsetAfter]="16" -->
+        <!-- autoplay
+        [autoplay]="{delay: 1200}" -->
+        <swiper-slide
+          class="swiper-slide"
+          *ngFor="let cast of movie?.credits?.cast; let i = index;"
+          button
+        >
+          <div class="swiper-slide-content">
+            <ion-avatar class="cast-image-container">
+              <img
+                [src]="imageBaseUrl + ''+'/w500'+'' + cast?.profile_path"
+                alt="{{cast?.title}}"
+                class="cast-image"
+                loading="lazy"
+              />
+            </ion-avatar>
+            <div class="swiper-lazy-preloader"></div>
+            <div class="cast-info">
+              <span class="cast-actor-name">{{cast?.name}}</span>
+              <span class="cast-character-name">{{cast?.character}}</span>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </ion-grid>
   </ion-card>
   <div class="suggest-movies-container">
     <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This' }}</h6>
