@@ -1,5 +1,10 @@
 <ion-tabs (ionTabsDidChange)="setSelectedTab()" class="ion-tabs ion-no-border">
-  <ion-tab-bar slot="bottom" color="transparent" class="tab-bar">
+  <ion-tab-bar
+    slot="bottom"
+    color="transparent"
+    class="tab-bar"
+    [style.display]="'flex'"
+  >
     <ion-tab-button tab="home">
       <ion-icon
         [name]="selected === 'home' ? 'home' : 'home-outline'"

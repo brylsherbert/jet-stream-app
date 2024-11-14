@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import {
   IonTabs,
   IonTabBar,
@@ -20,13 +20,22 @@ import {
   download,
   downloadOutline,
 } from 'ionicons/icons';
+import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
   standalone: true,
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    IonTabs,
+    IonTabBar,
+    IonTabButton,
+    IonIcon,
+    IonLabel,
+    SharedDirectivesModule,
+  ],
 })
 export class TabsPage {
   @ViewChild(IonTabs) tabs!: IonTabs;
