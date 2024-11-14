@@ -1,4 +1,4 @@
-<ion-header #header class="ion-no-border">
+<ion-header class="ion-no-border">
   <ion-toolbar color="transparent" class="header-items-container">
     <ion-row class="logo-container">
       <ion-col class="ion-text-left" size="4"
@@ -9,9 +9,13 @@
         ><img class="logo" src="../../assets/mockdata/netflix-logo.png" alt=""
       /></ion-col>
 
-      <ion-col size="4" class="ion-text-right"
-        ><ion-icon class="large-icon" name="settings"></ion-icon
-      ></ion-col>
+      <ion-col size="4" class="ion-text-right">
+        <ion-icon
+          class="large-icon"
+          name="person-circle"
+          (click)="openAuthModal()"
+        ></ion-icon>
+      </ion-col>
     </ion-row>
 
     <ion-row class="menu-category-container">
@@ -25,8 +29,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" scrollEvents="true" [appHideHeader]="header">
+<ion-content
+  [fullscreen]="true"
+  scrollEvents="true"
+  [appHideHeader]="spotLightContainer"
+>
   <swiper-container
+    #spotLightContainer
     class="spotlight-container"
     effect="fade"
     alt="poster"

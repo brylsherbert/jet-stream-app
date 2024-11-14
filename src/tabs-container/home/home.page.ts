@@ -15,6 +15,8 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService } from 'src/app/services/movie.service';
+import { ModalController } from '@ionic/angular';
+import { TmdbService } from 'src/app/services/tmdb.service';
 import { catchError, finalize, lastValueFrom } from 'rxjs';
 import { ApiResult, MovieResult } from 'src/app/services/interfaces';
 import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
@@ -23,19 +25,20 @@ import { DrawerService } from 'src/app/services/drawer.service';
 import { addIcons } from 'ionicons';
 import {
   caretDownOutline,
-  menu,
   menuOutline,
   settings,
-  settingsOutline,
   add,
   informationCircleOutline,
   play,
   chevronForward,
+  person,
+  personCircle,
 } from 'ionicons/icons';
 
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
+import { AuthComponent } from 'src/app/auth/auth.component';
 
 @Component({
   selector: 'app-home',
@@ -55,9 +58,13 @@ import { Capacitor } from '@capacitor/core';
     CommonModule,
     RouterModule,
     SharedDirectivesModule,
+    AuthComponent,
   ],
+  providers: [ModalController],
 })
 export class HomePage implements OnInit {
+  private tmdbService = inject(TmdbService);
+  private modalController = inject(ModalController);
   private drawerService = inject(DrawerService);
   public movieService = inject(MovieService);
   public currentPage = 1;
@@ -85,12 +92,14 @@ export class HomePage implements OnInit {
   constructor() {
     addIcons({
       menuOutline,
-      settings,
+      personCircle,
       caretDownOutline,
       add,
       play,
       informationCircleOutline,
       chevronForward,
+      person,
+      settings,
     });
   }
 
@@ -254,12 +263,16 @@ export class HomePage implements OnInit {
     };
 
     const getImageObjectFit = async () => {
-      this.objectFit = 'cover'; // Same for both platforms
+      if (this.platform === 'web') {
+        this.objectFit = 'cover';
+      } else {
+        this.objectFit = 'cover';
+      }
     };
 
     const getImageSize = async () => {
       if (this.platform === 'web') {
-        this.spotlightImageSize = '/w1280';
+        this.spotlightImageSize = '/original';
       } else {
         this.spotlightImageSize = '/w780';
       }
@@ -280,5 +293,37 @@ export class HomePage implements OnInit {
       getImageSize(),
       getThubmnailSize(),
     ]);
+  }
+
+  async openAuthModal() {
+    const modal = await this.modalController.create({
+      component: AuthComponent,
+    });
+    return await modal.present();
+  }
+
+  fetchNewToken() {
+    this.tmdbService.getNewRequestToken().subscribe({
+      next: (data) => {
+        console.log('Request token:', data.request_token);
+        const authUrl = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=YOUR_REDIRECT_URL`;
+        window.open(authUrl, '_blank'); // Open the login page in a new tab
+      },
+      error: (error) => {
+        console.error('Failed to fetch request token:', error);
+      },
+    });
+  }
+
+  handleCallback(verificationToken: string) {
+    // After user authenticates, use the verification token to create a session
+    this.tmdbService.createSession(verificationToken).subscribe({
+      next: (sessionData) => {
+        console.log('Session created:', sessionData.session_id);
+      },
+      error: (error) => {
+        console.error('Failed to create session:', error);
+      },
+    });
   }
 }

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Movie DB Authentication</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="sessionId()" (click)="logout()">Logout</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Login Form -->
+  <form *ngIf="!sessionId()" [formGroup]="form" (ngSubmit)="fetchNewToken()">
+    <ion-item>
+      <ion-label position="stacked">Username</ion-label>
+      <ion-input
+        formControlName="username"
+        type="text"
+        placeholder="Enter your username"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input
+        formControlName="password"
+        type="password"
+        placeholder="Enter your password"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="form.invalid"
+      >Login</ion-button
+    >
+  </form>
+
+  <!-- Display Account Details when logged in -->
+  <div *ngIf="sessionId() && accountDetails()">
+    <h2>Welcome, {{ accountDetails()?.username }}</h2>
+    <p>Account ID: {{ accountDetails()?.id }}</p>
+  </div>
+
+  <!-- Favorites List -->
+  <div *ngIf="sessionId() && favorites().length > 0">
+    <h3>Your Favorites</h3>
+    <ion-list>
+      <ion-item *ngFor="let favorite of favorites()">
+        <ion-label>{{ favorite.title || favorite.name }}</ion-label>
+        <ion-button
+          fill="clear"
+          color="danger"
+          (click)="addFavorite('movie', favorite.id, false)"
+        >
+          Remove from Favorites
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Message if No Favorites -->
+  <div *ngIf="sessionId() && favorites().length === 0">
+    <p>You currently have no favorites.</p>
+  </div>
+</ion-content>
