@@ -15,10 +15,23 @@ import {
   IonGrid,
   IonRow,
   IonList,
+  IonIcon,
+  IonCol,
 } from '@ionic/angular/standalone';
 import { catchError, finalize } from 'rxjs';
 import { MovieService } from 'src/app/services/movie.service';
 import { Capacitor } from '@capacitor/core';
+import { RouterModule } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { TmdbService } from 'src/app/services/tmdb.service';
+import {
+  informationCircle,
+  play,
+  playOutline,
+  informationCircleOutline,
+  heartOutline,
+  heart,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-coming-soon',
@@ -26,18 +39,20 @@ import { Capacitor } from '@capacitor/core';
   styleUrls: ['coming-soon.page.scss'],
   standalone: true,
   imports: [
-    IonList,
+    IonCol,
+    IonIcon,
     IonRow,
     IonGrid,
-    IonSegment,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
     CommonModule,
+    RouterModule,
   ],
 })
 export class ComingSoonPage {
+  private tmdbService = inject(TmdbService);
   private movieService = inject(MovieService);
   private capacitor = Capacitor;
   platform = this.capacitor.getPlatform();
@@ -55,9 +70,23 @@ export class ComingSoonPage {
   spotlightHeight: string = '';
   spotlightImageSize: string = '';
   thumbnailSize: string = '';
+  accountDetails: any;
 
   constructor() {
+    addIcons({
+      playOutline,
+      informationCircleOutline,
+      play,
+      informationCircle,
+      heartOutline,
+      heart,
+    });
     this.getUpcomingMovies();
+  }
+
+  ionViewWillEnter() {
+    this.accountDetails = this.tmdbService.accountDetails()?.id;
+    console.log('Account Details: ', this.accountDetails);
   }
 
   async getUpcomingMovies(event?: InfiniteScrollCustomEvent) {
@@ -138,5 +167,34 @@ export class ComingSoonPage {
       getImageSize(),
       getThubmnailSize(),
     ]);
+  }
+
+  // Method to toggle favorite status
+  toggleFavorite(movieId: any) {
+    const isCurrentlyFavorite = this.tmdbService
+      .favorites()
+      .some((favorite) => favorite.id === movieId);
+
+    this.tmdbService
+      .markAsFavorite(
+        this.tmdbService.accountDetails()?.id,
+        'movie',
+        movieId,
+        !isCurrentlyFavorite
+      )
+      .subscribe({
+        next: () => {
+          this.tmdbService.loadFavorites(); // Reload favorites to update the list
+        },
+        error: (error) => {
+          console.error('Failed to toggle favorite:', error);
+        },
+      });
+  }
+
+  isFavorite(movieId: any): boolean {
+    return this.tmdbService
+      .favorites()
+      .some((favorite) => favorite.id === movieId);
   }
 }
