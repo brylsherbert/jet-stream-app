@@ -52,9 +52,9 @@ ion-content {
       height: 100%;
       width: 100%;
 
-      .thumbnail {
-        filter: blur(60px);
-      }
+      // .thumbnail {
+      //   filter: blur(60px);
+      // }
 
       .poster-container {
         display: flex;
@@ -86,7 +86,7 @@ ion-content {
 
     ion-card-header {
       background-color: var(--background-color);
-      padding: 10px 16px 16px 16px;
+      padding: 24px 16px 0px 16px;
 
       display: flex;
       flex-direction: column;

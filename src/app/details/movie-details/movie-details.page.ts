@@ -13,8 +13,6 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonButtons,
-  IonBackButton,
   IonCard,
   IonLabel,
   IonCardTitle,
@@ -24,6 +22,8 @@ import {
   IonIcon,
   IonCardContent,
   IonCardHeader,
+  IonButtons,
+  IonBackButton,
   IonButton,
   IonAvatar,
   IonBadge,
@@ -35,7 +35,13 @@ import { MovieService } from '../../services/movie.service';
 import { TmdbService } from 'src/app/services/tmdb.service';
 
 import { addIcons } from 'ionicons';
-import { cashOutline, heart, heartOutline, playSharp } from 'ionicons/icons';
+import {
+  cashOutline,
+  heart,
+  heartOutline,
+  playSharp,
+  calendarOutline,
+} from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 
@@ -45,11 +51,7 @@ import { Capacitor } from '@capacitor/core';
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
   imports: [
-    IonCol,
-    IonRow,
     IonGrid,
-    IonBadge,
-    IonAvatar,
     IonButton,
     IonCardHeader,
     IonCardContent,
@@ -64,8 +66,6 @@ import { Capacitor } from '@capacitor/core';
     IonButtons,
     IonContent,
     IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
     RouterModule,
@@ -96,7 +96,7 @@ export class MovieDetailsPage {
   }
 
   constructor() {
-    addIcons({ playSharp, cashOutline, heartOutline, heart });
+    addIcons({ playSharp, calendarOutline, cashOutline, heartOutline, heart });
 
     this.accountDetails = this.tmdbService.accountDetails()?.id;
     console.log('Account Details: ', this.accountDetails);

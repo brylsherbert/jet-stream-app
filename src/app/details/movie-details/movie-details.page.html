@@ -17,16 +17,16 @@
     <div class="thumbnail-container">
       <div
         class="thumbnail"
-        [style.height.px]="360"
-        [style.background]="'url('+ imageBaseUrl + '/w154' + movie?.poster_path +') no-repeat center center / cover'"
+        [style.height]="'330px'"
+        [style.background]="'url('+ imageBaseUrl + '/original' + movie?.images.backdrops[0].file_path +') no-repeat center center / cover'"
       ></div>
-      <div class="poster-container" [style.height.px]="300">
+      <!-- <div class="poster-container" [style.height.px]="300">
         <img
           [style.height.px]="300"
-          [src]="imageBaseUrl + '/w500' + movie?.poster_path"
+          [src]="imageBaseUrl + '/w500' + movie?.images.posters[99].file_path"
           alt="poster"
         />
-      </div>
+      </div> -->
       <div class="gradient"></div>
     </div>
 
@@ -76,10 +76,10 @@
         </div>
 
         <div class="ion-items">
-          <!-- <ion-item lines="none" class="ion-item-container">
+          <ion-item lines="none" class="ion-item-container">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
-          </ion-item> -->
+          </ion-item>
 
           <ion-item
             lines="none"
