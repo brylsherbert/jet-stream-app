@@ -1,5 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons class="back-button" slot="start">
+      <ion-back-button
+        defaultHref="/"
+        (click)="dismissModal()"
+      ></ion-back-button>
+    </ion-buttons>
     <ion-title>Movie DB Authentication</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="sessionId()" (click)="logout()">Logout</ion-button>

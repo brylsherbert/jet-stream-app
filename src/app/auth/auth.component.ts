@@ -11,6 +11,8 @@ import {
   IonTitle,
   IonItem,
   IonLabel,
+  IonButtons,
+  IonBackButton,
   IonButton,
   IonContent,
   IonInput,
@@ -37,6 +39,8 @@ import { arrowBack } from 'ionicons/icons';
     IonInput,
     IonContent,
     IonButton,
+    IonBackButton,
+    IonButtons,
     IonLabel,
     IonItem,
     IonTitle,
@@ -154,5 +158,9 @@ export class AuthComponent implements OnInit {
           error: (error) => console.error('Failed to mark as favorite:', error),
         });
     }
+  }
+
+  dismissModal() {
+    return this.modalController.dismiss();
   }
 }
