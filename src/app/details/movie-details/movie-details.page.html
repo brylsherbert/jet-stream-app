@@ -143,6 +143,7 @@
       <img
         [src]="imageBaseUrl + '/w300' + item.poster_path"
         alt="poster"
+        *ngIf="item?.poster_path"
         button
         [routerLink]="['/movie-details/', item.id]"
       />
