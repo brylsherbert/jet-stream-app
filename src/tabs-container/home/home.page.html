@@ -1,15 +1,11 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="transparent" class="header-items-container">
     <ion-row class="logo-container">
-      <ion-col class="ion-text-left" size="4"
-        ><ion-icon class="large-icon" name="menu-outline"></ion-icon
-      ></ion-col>
-
-      <ion-col size="4" class="ion-text-center"
+      <ion-col size="6" class="ion-text-left"
         ><img class="logo" src="../../assets/mockdata/netflix-logo.png" alt=""
       /></ion-col>
 
-      <ion-col size="4" class="ion-text-right">
+      <ion-col size="6" class="ion-text-right">
         <ion-icon
           class="large-icon"
           name="person-circle"
@@ -21,7 +17,7 @@
     <ion-row class="menu-category-container">
       <ion-col>TV Shows</ion-col>
       <ion-col>Movies</ion-col>
-      <ion-col size="4" tappable (click)="openCategories()"
+      <ion-col tappable (click)="openCategories()"
         >Categories
         <ion-icon name="caret-down-outline"></ion-icon>
       </ion-col>
@@ -43,8 +39,6 @@
     direction="horizontal"
     slides-per-view="1"
     parallax="true"
-    autoplay
-    [autoplay]="{delay: 5000}"
     speed="1000"
     (ionSlideChange)="onSlideChange($event)"
   >

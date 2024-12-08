@@ -52,13 +52,10 @@ import { AuthComponent } from 'src/app/auth/auth.component';
     IonRow,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonContent,
-    ModalPage,
     CommonModule,
     RouterModule,
     SharedDirectivesModule,
-    AuthComponent,
   ],
   providers: [ModalController],
 })
@@ -248,7 +245,7 @@ export class HomePage implements OnInit {
   async initializePlatform() {
     const getSlidesPerView = async () => {
       if (this.platform === 'web') {
-        this.slidesPerView = 9;
+        this.slidesPerView = 6;
       } else {
         this.slidesPerView = 3.3;
       }
