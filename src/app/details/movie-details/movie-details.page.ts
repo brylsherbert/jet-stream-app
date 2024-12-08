@@ -41,6 +41,8 @@ import {
   heartOutline,
   playSharp,
   calendarOutline,
+  volumeHighOutline,
+  volumeMuteOutline,
 } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
@@ -88,6 +90,9 @@ export class MovieDetailsPage {
   similarVideosLength = this.getDynamicSimilarVideosLength();
   sessionId: any;
   accountDetails: any;
+  isVideoPlaying = false;
+  isVideoMuted: boolean = true;
+  shouldPlayVideo: boolean = false;
 
   @Input()
   set id(movieId: string) {
@@ -96,7 +101,15 @@ export class MovieDetailsPage {
   }
 
   constructor() {
-    addIcons({ playSharp, calendarOutline, cashOutline, heartOutline, heart });
+    addIcons({
+      playSharp,
+      calendarOutline,
+      cashOutline,
+      heartOutline,
+      heart,
+      volumeHighOutline,
+      volumeMuteOutline,
+    });
 
     this.accountDetails = this.tmdbService.accountDetails()?.id;
     console.log('Account Details: ', this.accountDetails);
@@ -114,6 +127,7 @@ export class MovieDetailsPage {
         this.similarMovies.set(this.similarIsEmpty ? recommendations : similar);
 
         this.isLoading = false;
+        this.loadVideoListeners();
       },
       error: (err) => {
         console.error('Failed to fetch movie details:', err);
@@ -170,5 +184,93 @@ export class MovieDetailsPage {
     return this.tmdbService
       .favorites()
       .some((favorite) => favorite.id === movieId);
+  }
+
+  async handleVideoPlay() {
+    const videos = document.querySelectorAll('video');
+    const currentElement = videos[videos.length - 1];
+    if (videos) {
+      currentElement?.paused ? currentElement?.play() : currentElement?.pause();
+    }
+  }
+
+  toogleMuteVideo() {
+    const videos = document.querySelectorAll('video');
+    const currentElement = videos[videos.length - 1];
+
+    if (currentElement?.muted === true) {
+      currentElement.muted = false;
+      this.isVideoMuted = false;
+    } else {
+      currentElement.muted = true;
+      this.isVideoMuted = true;
+    }
+  }
+
+  async ionViewDidEnter() {
+    setTimeout(() => {
+      if (this.movie()) {
+        const videos = document.querySelectorAll('video');
+        const currentElement = videos[videos.length - 1];
+
+        if (currentElement?.paused) {
+          currentElement.play();
+        }
+      }
+    }, 2000);
+  }
+
+  ionViewWillLeave() {
+    this.shouldPlayVideo = false;
+
+    const videos = document.querySelectorAll('video');
+    videos.forEach((video: HTMLVideoElement, index) => {
+      if (!video?.paused) {
+        console.log(`Video #${index} Paused!`);
+        video?.pause();
+      }
+    });
+
+    this.unLoadEventListeners();
+  }
+
+  loadVideoListeners() {
+    setTimeout(() => {
+      this.shouldPlayVideo = true;
+      const videos = document.querySelectorAll('video');
+      const currentElement = videos[videos.length - 1];
+
+      if (currentElement) {
+        const playHandler = () => {
+          this.isVideoPlaying = true;
+        };
+
+        const pauseHandler = () => {
+          this.isVideoPlaying = false;
+        };
+
+        currentElement.addEventListener('play', playHandler);
+
+        currentElement.addEventListener('pause', pauseHandler);
+      }
+    }, 50);
+  }
+
+  unLoadEventListeners() {
+    const videos = document.querySelectorAll('video');
+    const currentElement = videos[videos.length - 1];
+
+    if (currentElement) {
+      currentElement.removeEventListener('play', this.playHandler);
+      currentElement.removeEventListener('pause', this.pauseHandler);
+    }
+  }
+
+  playHandler() {
+    this.isVideoPlaying = true;
+  }
+
+  pauseHandler() {
+    this.isVideoPlaying = false;
   }
 }

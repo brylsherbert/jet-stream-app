@@ -15,11 +15,27 @@
 
   <ion-card class="ion-card-container ion-no-padding ion-no-margin">
     <div class="thumbnail-container">
-      <div
+      <img
+        id="thumbnail"
         class="thumbnail"
-        [style.height]="'330px'"
-        [style.background]="'url('+ imageBaseUrl + '/original' + movie?.images.backdrops[0].file_path +') no-repeat center center / cover'"
-      ></div>
+        [src]="imageBaseUrl + '/original' + movie?.backdrop_path"
+        alt=""
+        srcset=""
+        [ngClass]="{'hidden': isVideoPlaying, 'visible': !isVideoPlaying}"
+      />
+
+      <video
+        #videoContent
+        width="600"
+        class="video-player"
+        id="video-player"
+        [muted]="'muted'"
+        [ngClass]="{'playing': isVideoPlaying, 'paused': !isVideoPlaying}"
+      >
+        <source src="../../../assets/mockdata/skate.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       <!-- <div class="poster-container" [style.height.px]="300">
         <img
           [style.height.px]="300"
@@ -28,6 +44,14 @@
         />
       </div> -->
       <div class="gradient"></div>
+      <ion-icon
+        (click)="toogleMuteVideo()"
+        [name]="this.isVideoMuted === false ? 'volume-high-outline' : 'volume-mute-outline'"
+        slot="start"
+        size="large"
+        class="mute-button"
+        [ngClass]="{'playing': isVideoPlaying, 'paused': !isVideoPlaying}"
+      ></ion-icon>
     </div>
 
     <ion-card-header class="ion-card-header-container">
@@ -40,7 +64,10 @@
           <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
           }
         </ion-text>
-        <ion-button expand="block" class="play-button"
+        <ion-button
+          expand="block"
+          class="play-button"
+          (click)="handleVideoPlay()"
           ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
           >Play</ion-button
         >
