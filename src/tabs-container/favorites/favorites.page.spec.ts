@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DownloadPage } from './download.page';
+import { FavoritesPage } from './favorites.page';
 
-describe('DownloadPage', () => {
-  let component: DownloadPage;
-  let fixture: ComponentFixture<DownloadPage>;
+describe('FavoritesPage', () => {
+  let component: FavoritesPage;
+  let fixture: ComponentFixture<FavoritesPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DownloadPage);
+    fixture = TestBed.createComponent(FavoritesPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

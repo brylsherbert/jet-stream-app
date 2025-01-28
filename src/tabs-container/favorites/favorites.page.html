@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="transparent">
+    <ion-title>Favorites</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="sessionId() && favorites().length > 0">
+    <ion-list>
+      <ion-item *ngFor="let favorite of favorites()" [routerLink]="['/movie-details', favorite?.id]">
+        <ion-label>{{ favorite.title || favorite.name }}</ion-label>
+        <ion-button
+          fill="clear"
+          color="danger"
+          (click)="addFavorite('movie', favorite.id, false)"
+        >
+          Remove from Favorites
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Message if No Favorites -->
+  <div *ngIf="sessionId() && favorites().length === 0">
+    <p>You currently have no favorites.</p>
+  </div>
+</ion-content>

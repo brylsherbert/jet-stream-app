@@ -24,9 +24,9 @@ export const routes: Routes = [
           import('../search/search.page').then((m) => m.SearchPage),
       },
       {
-        path: 'download',
+        path: 'favorites',
         loadComponent: () =>
-          import('../download/download.page').then((m) => m.DownloadPage),
+          import('../favorites/favorites.page').then((m) => m.FavoritesPage),
       },
       {
         path: '',

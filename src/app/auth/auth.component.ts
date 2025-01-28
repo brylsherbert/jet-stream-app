@@ -22,7 +22,6 @@ import { ModalController } from '@ionic/angular';
 import {
   FormGroup,
   FormsModule,
-  NgControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -59,7 +58,6 @@ export class AuthComponent implements OnInit {
   form!: FormGroup;
   requestToken: string = '';
 
-  // Directly accessing signals for reactive data binding
   favorites = this.tmdbService.favorites;
   sessionId = this.tmdbService.sessionId;
   accountDetails = this.tmdbService.accountDetails;
@@ -146,18 +144,6 @@ export class AuthComponent implements OnInit {
       next: () => this.tmdbService.clearSession(), // Clear session and reset state
       error: (error) => console.error('Failed to delete session:', error),
     });
-  }
-
-  addFavorite(mediaType: string, mediaId: number, favorite: boolean) {
-    const accountId = this.accountDetails()?.id;
-    if (accountId) {
-      this.tmdbService
-        .markAsFavorite(accountId, mediaType, mediaId, favorite)
-        .subscribe({
-          next: () => this.tmdbService.loadFavorites(), // Reload favorites after update
-          error: (error) => console.error('Failed to mark as favorite:', error),
-        });
-    }
   }
 
   dismissModal() {

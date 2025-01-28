@@ -44,26 +44,4 @@
     <h2>Welcome, {{ accountDetails()?.username }}</h2>
     <p>Account ID: {{ accountDetails()?.id }}</p>
   </div>
-
-  <!-- Favorites List -->
-  <div *ngIf="sessionId() && favorites().length > 0">
-    <h3>Your Favorites</h3>
-    <ion-list>
-      <ion-item *ngFor="let favorite of favorites()">
-        <ion-label>{{ favorite.title || favorite.name }}</ion-label>
-        <ion-button
-          fill="clear"
-          color="danger"
-          (click)="addFavorite('movie', favorite.id, false)"
-        >
-          Remove from Favorites
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
-
-  <!-- Message if No Favorites -->
-  <div *ngIf="sessionId() && favorites().length === 0">
-    <p>You currently have no favorites.</p>
-  </div>
 </ion-content>
