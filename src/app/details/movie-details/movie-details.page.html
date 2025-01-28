@@ -30,6 +30,8 @@
         class="video-player"
         id="video-player"
         [muted]="'muted'"
+        playsInline
+        webkit-playsinline
         [ngClass]="{'playing': isVideoPlaying, 'paused': !isVideoPlaying}"
       >
         <source src="../../../assets/mockdata/skate.mp4" type="video/mp4" />
