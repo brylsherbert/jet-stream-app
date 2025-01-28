@@ -121,7 +121,7 @@
       </ion-card-content>
     </ion-card-header>
 
-    <ion-grid fixed class="cast-container">
+    <ion-grid fixed class="cast-container" *ngIf="movie?.credits?.cast?.length > 0">
       <ion-label>
         <h1 class="ion-padding">Cast</h1>
       </ion-label>
