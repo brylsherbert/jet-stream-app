@@ -63,13 +63,21 @@
 
             <ion-row
               class="ion-align-items-center ion-row-container spotlight-buttons-container"
-            >
+            >    
               <ion-col class="ion-text-center" size="4">
                 <div class="btn-vertical large-icon">
-                  <ion-icon name="add" class="large-icon"></ion-icon>
-                  <span>My List</span>
+                  <ion-icon
+                    [name]="isFavorite(item?.id) ? 'heart' : 'heart-outline'"
+                    slot="start"
+                    color="danger"
+                    size="large"
+                    id="present-alert"
+                    (click)="toggleFavorite(item?.id)"
+                  ></ion-icon> 
+                  <span>My Favorites</span>
                 </div>
               </ion-col>
+              
 
               <ion-col class="ion-text-center" size="4">
                 <div class="btn-play">

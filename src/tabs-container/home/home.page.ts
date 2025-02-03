@@ -2,6 +2,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   OnInit,
+  effect,
   inject,
 } from '@angular/core';
 import {
@@ -13,6 +14,7 @@ import {
   IonRow,
   IonCol,
   IonIcon,
+  AlertController
 } from '@ionic/angular/standalone';
 import { MovieService } from 'src/app/services/movie.service';
 import { ModalController } from '@ionic/angular';
@@ -33,6 +35,8 @@ import {
   chevronForward,
   person,
   personCircle,
+  heart,
+  heartOutline,
 } from 'ionicons/icons';
 
 import { CommonModule } from '@angular/common';
@@ -64,6 +68,7 @@ export class HomePage implements OnInit {
   private modalController = inject(ModalController);
   private drawerService = inject(DrawerService);
   public movieService = inject(MovieService);
+  private alertController = inject(AlertController);
   public currentPage = 1;
   public error: string | null = null;
   public isLoading = false;
@@ -85,6 +90,7 @@ export class HomePage implements OnInit {
   spotlightHeight: string = '';
   spotlightImageSize: string = '';
   thumbnailSize: string = '';
+  accountDetails: any;
 
   constructor() {
     addIcons({
@@ -97,6 +103,12 @@ export class HomePage implements OnInit {
       chevronForward,
       person,
       settings,
+      heart,
+      heartOutline
+    });
+
+    effect(() => {
+      this.accountDetails = this.tmdbService.accountDetails()?.id;
     });
   }
 
@@ -323,4 +335,61 @@ export class HomePage implements OnInit {
       },
     });
   }
+
+    toggleFavorite(movieId: number) {
+      if (this.accountDetails) {
+        const isCurrentlyFavorite = this.tmdbService
+        .favorites()
+        .some((favorite) => favorite.id === movieId);
+      this.tmdbService
+        .markAsFavorite(
+          this.tmdbService.accountDetails()?.id,
+          'movie',
+          movieId,
+          !isCurrentlyFavorite
+        )
+        .subscribe({
+          next: () => {
+            this.tmdbService.loadFavorites();
+          },
+          error: (error) => {
+            console.error('Failed to toggle favorite:', error);
+          },
+        });
+      } else {
+        this.loginAlert();
+      }
+      
+    }
+  
+    isFavorite(movieId: number): boolean {
+      return this.tmdbService
+        .favorites()
+        .some((favorite) => favorite.id === movieId);
+    }
+
+    async loginAlert() {
+      const alert = await this.alertController.create({
+        header: 'Login Required',
+        subHeader: 'Access Restricted',
+        message: 'Please log in to continue.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'alert-cancel',
+          },
+          {
+            text: 'OK',
+            handler: () => {
+              this.openAuthModal();
+            },
+            cssClass: 'alert-ok',
+          },
+        ],
+        cssClass: 'custom-alert',
+      });
+    
+      await alert.present();
+    }    
 }
