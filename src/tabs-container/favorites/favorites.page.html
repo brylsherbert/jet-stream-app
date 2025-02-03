@@ -24,4 +24,8 @@
   <div *ngIf="sessionId() && favorites().length === 0">
     <p>You currently have no favorites.</p>
   </div>
+
+  <div *ngIf="!sessionId()" class="default-message">
+    <p>Please login to see favorites</p>
+  </div>
 </ion-content>
