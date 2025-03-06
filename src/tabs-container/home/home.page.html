@@ -30,84 +30,86 @@
   scrollEvents="true"
   [appHideHeader]="spotLightContainer"
 >
-  <swiper-container
-    #spotLightContainer
-    class="spotlight-container"
-    effect="fade"
-    alt="poster"
-    [slidesPerView]="1"
-    direction="horizontal"
-    slides-per-view="1"
-    parallax="true"
-    speed="1000"
-    (ionSlideChange)="onSlideChange($event)"
-  >
-    <swiper-slide
-      class="swiper-slide"
-      *ngFor="let item of this.spotlight; let i = index;"
+  <div class="content-container" #spotLightContainer>
+    @if(!this.isLoading) {
+      <swiper-container
+      #spotLightContainer
+      class="spotlight-container"
+      effect="fade"
+      alt="poster"
+      [slidesPerView]="1"
+      direction="horizontal"
+      slides-per-view="1"
+      parallax="true"
+      speed="1000"
+      (ionSlideChange)="onSlideChange($event)"
     >
-      <div
-        class="swiper-slides"
-        [style.background]="'url('+imageBaseUrl+''+spotlightImageSize+''+(this.platform === 'web' ? item?.backdrop_path : item?.poster_path)+') no-repeat center center / '+objectFit+''"
-        [style.height]="spotlightHeight"
+      <swiper-slide
+        class="swiper-slide"
+        *ngFor="let item of this.spotlight; let i = index;"
       >
-        <div class="gradient">
-          <div class="info">
-            <h1 class="title">{{item?.title}}</h1>
-            <!-- <ion-text color="tertiary spotlight-genre">
-              @for (genre of this.spotlight; track genre.id; let isLast =
-              $last;) {
-              <span> {{genre.title}} {{!isLast ? '•' : ''}} </span>
-              }
-            </ion-text> -->
+        <div
+          class="swiper-slides"
+          [style.background]="'url('+imageBaseUrl+''+spotlightImageSize+''+(this.platform === 'web' ? item?.backdrop_path : item?.poster_path)+') no-repeat center center / '+objectFit+''"
+          [style.height]="spotlightHeight"
+        >
+          <div class="gradient">
+            <div class="info">
+              <h1 class="title">{{item?.title}}</h1>
+              <!-- <ion-text color="tertiary spotlight-genre">
+                @for (genre of this.spotlight; track genre.id; let isLast =
+                $last;) {
+                <span> {{genre.title}} {{!isLast ? '•' : ''}} </span>
+                }
+              </ion-text> -->
 
-            <ion-row
-              class="ion-align-items-center ion-row-container spotlight-buttons-container"
-            >    
-              <ion-col class="ion-text-center" size="4">
-                <div class="btn-vertical large-icon">
-                  <ion-icon
-                    [name]="isFavorite(item?.id) ? 'heart' : 'heart-outline'"
-                    slot="start"
-                    color="danger"
-                    size="large"
-                    id="present-alert"
-                    (click)="toggleFavorite(item?.id)"
-                  ></ion-icon> 
-                  <span>My Favorites</span>
-                </div>
-              </ion-col>
-              
+              <ion-row
+                class="ion-align-items-center ion-row-container spotlight-buttons-container"
+              >    
+                <ion-col class="ion-text-center" size="4">
+                  <div class="btn-vertical large-icon">
+                    <ion-icon
+                      [name]="isFavorite(item?.id) ? 'heart' : 'heart-outline'"
+                      slot="start"
+                      color="danger"
+                      size="large"
+                      id="present-alert"
+                      (click)="toggleFavorite(item?.id)"
+                    ></ion-icon> 
+                    <span>My Favorites</span>
+                  </div>
+                </ion-col>
+                
 
-              <ion-col class="ion-text-center" size="4">
-                <div class="btn-play">
-                  <ion-icon name="play" color="dark"></ion-icon>
-                  <span>Play</span>
-                </div>
-              </ion-col>
+                <ion-col class="ion-text-center" size="4">
+                  <div class="btn-play">
+                    <ion-icon name="play" color="dark"></ion-icon>
+                    <span>Play</span>
+                  </div>
+                </ion-col>
 
-              <ion-col
-                class="ion-text-center"
-                size="4"
-                button
-                [routerLink]="['/movie-details', item?.id]"
-              >
-                <div class="btn-vertical">
-                  <ion-icon
-                    name="information-circle-outline"
-                    class="large-icon"
-                  ></ion-icon>
-                  <span>Info</span>
-                </div>
-              </ion-col>
-            </ion-row>
+                <ion-col
+                  class="ion-text-center"
+                  size="4"
+                  button
+                  [routerLink]="['/movie-details', item?.id]"
+                >
+                  <div class="btn-vertical">
+                    <ion-icon
+                      name="information-circle-outline"
+                      class="large-icon"
+                    ></ion-icon>
+                    <span>Info</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
           </div>
         </div>
-      </div>
-    </swiper-slide>
-  </swiper-container>
+      </swiper-slide>
+    </swiper-container>
 
-  <div
+    <div
     class="category-container now-playing-movies"
     *ngIf="nowPlayingMovies.length"
   >
@@ -288,6 +290,52 @@
         <p class="video-title">{{item?.title}}</p>
       </swiper-slide>
     </swiper-container>
+  </div>
+    } @else {
+      <div class="spotligth-skeleton-container"></div>
+      <ion-skeleton-text [animated]="true" class="spotlight-skeleton"
+      style="width: 100%; height: 75vh;"/>
+
+
+      <div class="flex-column-container" style="margin-top: 20px;">
+        <div class="title-swiper-container">
+          <div class="title-skeleton-container" style="display: flex; justify-content: space-between;">
+            <ion-skeleton-text [animated]="true" class="title-skeleton"
+            style="width: 50%;"/>
+
+            <ion-skeleton-text [animated]="true" class="title-skeleton"  style="width: 25%;"/>
+          </div>
+
+          <div class="swiper-skeleton-container">
+            <swiper-container [slidesPerView]="3.2" [spaceBetween]="5" direction="horizontal">
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+            </swiper-container>
+          </div>
+        </div>
+      </div>
+    }
   </div>
 
   <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
