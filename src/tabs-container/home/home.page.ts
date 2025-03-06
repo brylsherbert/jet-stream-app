@@ -72,6 +72,7 @@ export class HomePage implements OnInit {
   public currentPage = 1;
   public error: string | null = null;
   public isLoading = false;
+  private isLoadingSeries = false;
   public popularMovies: MovieResult[] = [];
   public topRatedMovies: MovieResult[] = [];
   public nowPlayingMovies: MovieResult[] = [];
@@ -201,7 +202,7 @@ export class HomePage implements OnInit {
       .getPopularTvShows<MovieResult>()
       .pipe(
         finalize(() => {
-          this.isLoading = false;
+          this.isLoadingSeries = false;
           if (event) {
             event.target.complete();
           }
@@ -276,7 +277,7 @@ export class HomePage implements OnInit {
         this.objectFit = 'cover';
       } else {
         this.objectFit = 'cover';
-      }
+      } 
     };
 
     const getImageSize = async () => {
