@@ -16,8 +16,7 @@ import {
   IonRow,
   IonList,
   IonIcon,
-  IonCol,
-} from '@ionic/angular/standalone';
+  IonCol, IonSkeletonText } from '@ionic/angular/standalone';
 import { catchError, finalize } from 'rxjs';
 import { MovieService } from 'src/app/services/movie.service';
 import { Capacitor } from '@capacitor/core';
@@ -39,6 +38,7 @@ import {
   styleUrls: ['coming-soon.page.scss'],
   standalone: true,
   imports: [
+    IonSkeletonText,
     IonCol,
     IonIcon,
     IonRow,
@@ -90,6 +90,7 @@ export class ComingSoonPage {
   }
 
   async getUpcomingMovies(event?: InfiniteScrollCustomEvent) {
+    this.isLoading = true;
     this.movieService
       .getMovies<UpcomingMoviesData>('upcoming', this.currentPage)
       .pipe(

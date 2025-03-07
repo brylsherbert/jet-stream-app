@@ -6,7 +6,7 @@
 .upcoming-movies-container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
   padding: 20px 10px 0px 10px;
 
   .upcoming-movies {
@@ -60,6 +60,51 @@
       text-overflow: ellipsis; /* Add ellipsis */
 
       font-size: 0.8rem;
+    }
+  }
+
+  // Skeleton CSS
+  ion-skeleton-text {
+    background-color: #404040;
+  }
+
+  .skeleton-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .skeleton-thumbnail {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+    }
+
+    .skeleton-title-buttons-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .skeleton-title {
+        width: 50%;
+        height: 30px;
+        border-radius: 10px;
+      }
+
+      .skeleton-buttons-container  {
+        display: flex;
+        gap: 10px;
+
+        .skeleton-button {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .skeleton-overview{
+      border-radius: 5px;
     }
   }
 }
