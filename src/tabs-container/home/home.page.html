@@ -28,9 +28,9 @@
 <ion-content
   [fullscreen]="true"
   scrollEvents="true"
-  [appHideHeader]="spotLightContainer"
+  [appHideHeader]="contentContainer"
 >
-  <div class="content-container" #spotLightContainer>
+  <div class="content-container" #contentContainer  style="z-index: 1;">
     @if(!this.isLoading) {
       <swiper-container
       #spotLightContainer
@@ -42,6 +42,7 @@
       slides-per-view="1"
       parallax="true"
       speed="1000"
+      style="z-index: 9999;"
       (ionSlideChange)="onSlideChange($event)"
     >
       <swiper-slide
@@ -107,190 +108,190 @@
           </div>
         </div>
       </swiper-slide>
-    </swiper-container>
+      </swiper-container>
 
-    <div
-    class="category-container now-playing-movies"
-    *ngIf="nowPlayingMovies.length"
-  >
-    <div class="category-title-container">
-      <h3 class="category-title">Now Playing Movies</h3>
-      <ion-button
-        class="see-all-button"
-        (click)="seeAllCategoryData(nowPlayingMovies, 'Now Playing Movies')"
-        >See all
-        <ion-icon name="chevron-forward"></ion-icon>
-      </ion-button>
-    </div>
-    <swiper-container
-      class="movies-container"
-      effect="card"
-      alt="poster"
-      [slidesPerView]="slidesPerView"
-      [spaceBetween]="5"
-      autoplay
-      [autoplay]="{delay: 2000}"
-      direction="horizontal"
-      parallax="true"
-      speed="1000"
+      <div
+      class="category-container now-playing-movies"
+      *ngIf="nowPlayingMovies.length"
     >
-      <swiper-slide
-        class="swiper-slide"
-        *ngFor="let item of nowPlayingMovies; let i = index;"
-        [routerLink]="['/movie-details', item?.id]"
+      <div class="category-title-container">
+        <h3 class="category-title">Now Playing Movies</h3>
+        <ion-button
+          class="see-all-button"
+          (click)="seeAllCategoryData(nowPlayingMovies, 'Now Playing Movies')"
+          >See all
+          <ion-icon name="chevron-forward"></ion-icon>
+        </ion-button>
+      </div>
+      <swiper-container
+        class="movies-container"
+        effect="card"
+        alt="poster"
+        [slidesPerView]="slidesPerView"
+        [spaceBetween]="5"
+        autoplay
+        [autoplay]="{delay: 2000}"
+        direction="horizontal"
+        parallax="true"
+        speed="1000"
       >
-        <div class="swiper-slide-content">
-          <img
-            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
-            alt="{{item?.title}}"
-            class="slide-image"
-            loading="lazy"
-          />
-          <div class="swiper-lazy-preloader"></div>
-          <div class="gradient"></div>
-          <div class="info">
-            <span class="rating">{{item?.vote_count}}</span>
+        <swiper-slide
+          class="swiper-slide"
+          *ngFor="let item of nowPlayingMovies; let i = index;"
+          [routerLink]="['/movie-details', item?.id]"
+        >
+          <div class="swiper-slide-content">
+            <img
+              [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
+              alt="{{item?.title}}"
+              class="slide-image"
+              loading="lazy"
+            />
+            <div class="swiper-lazy-preloader"></div>
+            <div class="gradient"></div>
+            <div class="info">
+              <span class="rating">{{item?.vote_count}}</span>
+            </div>
           </div>
-        </div>
-        <p class="video-title">{{item?.title}}</p>
-      </swiper-slide>
-    </swiper-container>
-  </div>
+          <p class="video-title">{{item?.title}}</p>
+        </swiper-slide>
+      </swiper-container>
+      </div>
 
-  <div class="category-container top-rated-tv-shows">
-    <div class="category-title-container">
-      <h3 class="category-title">Trending TV Shows</h3>
-      <ion-button
-        class="see-all-button"
-        (click)="seeAllCategoryData(topRatedTvShows, 'Trending TV Shows')"
-        >See all
-        <ion-icon name="chevron-forward"></ion-icon>
-      </ion-button>
-    </div>
-    <swiper-container
-      class="movies-container"
-      effect="card"
-      alt="poster"
-      [slidesPerView]="slidesPerView"
-      [spaceBetween]="5"
-      direction="horizontal"
-      parallax="true"
-      speed="1000"
-      autoplay
-      [autoplay]="{delay: 1200}"
-    >
-      <swiper-slide
-        class="swiper-slide"
-        *ngFor="let item of topRatedTvShows; let i = index;"
-        button
-        [routerLink]="['/show-details', item.id]"
-      >
-        <div class="swiper-slide-content">
-          <img
-            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
-            alt="{{item?.title}}"
-            class="slide-image"
-            loading="lazy"
-          />
-          <div class="swiper-lazy-preloader"></div>
-          <div class="gradient"></div>
-          <div class="info">
-            <span class="rating">{{item?.vote_count}}</span>
-          </div>
+      <div class="category-container top-rated-tv-shows">
+        <div class="category-title-container">
+          <h3 class="category-title">Trending TV Shows</h3>
+          <ion-button
+            class="see-all-button"
+            (click)="seeAllCategoryData(topRatedTvShows, 'Trending TV Shows')"
+            >See all
+            <ion-icon name="chevron-forward"></ion-icon>
+          </ion-button>
         </div>
-        <p class="video-title">{{item?.name}}</p>
-      </swiper-slide>
-    </swiper-container>
-  </div>
+        <swiper-container
+          class="movies-container"
+          effect="card"
+          alt="poster"
+          [slidesPerView]="slidesPerView"
+          [spaceBetween]="5"
+          direction="horizontal"
+          parallax="true"
+          speed="1000"
+          autoplay
+          [autoplay]="{delay: 1200}"
+        >
+          <swiper-slide
+            class="swiper-slide"
+            *ngFor="let item of topRatedTvShows; let i = index;"
+            button
+            [routerLink]="['/show-details', item.id]"
+          >
+            <div class="swiper-slide-content">
+              <img
+                [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
+                alt="{{item?.title}}"
+                class="slide-image"
+                loading="lazy"
+              />
+              <div class="swiper-lazy-preloader"></div>
+              <div class="gradient"></div>
+              <div class="info">
+                <span class="rating">{{item?.vote_count}}</span>
+              </div>
+            </div>
+            <p class="video-title">{{item?.name}}</p>
+          </swiper-slide>
+        </swiper-container>
+      </div>
 
-  <div class="category-container top-rated-movies">
-    <div class="category-title-container">
-      <h3 class="category-title">Top Rated Movies</h3>
-      <ion-button
-        class="see-all-button"
-        (click)="seeAllCategoryData(topRatedMovies, 'Top Rated Movies')"
-        >See all <ion-icon name="chevron-forward"></ion-icon
-      ></ion-button>
-    </div>
-    <swiper-container
-      class="movies-container"
-      effect="card"
-      alt="poster"
-      [slidesPerView]="slidesPerView"
-      [spaceBetween]="5"
-      direction="horizontal"
-      parallax="true"
-      speed="1000"
-      autoplay
-      [autoplay]="{delay: 1600}"
-    >
-      <swiper-slide
-        class="swiper-slide"
-        *ngFor="let item of topRatedMovies; let i = index;"
-        button
-        [routerLink]="['/movie-details', item?.id]"
-      >
-        <div class="swiper-slide-content">
-          <img
-            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
-            alt="{{item?.title}}"
-            class="slide-image"
-            loading="lazy"
-          />
-          <div class="swiper-lazy-preloader"></div>
-          <div class="gradient"></div>
-          <div class="info">
-            <span class="rating">{{item?.vote_count}}</span>
-          </div>
+      <div class="category-container top-rated-movies">
+        <div class="category-title-container">
+          <h3 class="category-title">Top Rated Movies</h3>
+          <ion-button
+            class="see-all-button"
+            (click)="seeAllCategoryData(topRatedMovies, 'Top Rated Movies')"
+            >See all <ion-icon name="chevron-forward"></ion-icon
+          ></ion-button>
         </div>
-        <p class="video-title">{{item?.title}}</p>
-      </swiper-slide>
-    </swiper-container>
-  </div>
+        <swiper-container
+          class="movies-container"
+          effect="card"
+          alt="poster"
+          [slidesPerView]="slidesPerView"
+          [spaceBetween]="5"
+          direction="horizontal"
+          parallax="true"
+          speed="1000"
+          autoplay
+          [autoplay]="{delay: 1600}"
+        >
+          <swiper-slide
+            class="swiper-slide"
+            *ngFor="let item of topRatedMovies; let i = index;"
+            button
+            [routerLink]="['/movie-details', item?.id]"
+          >
+            <div class="swiper-slide-content">
+              <img
+                [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
+                alt="{{item?.title}}"
+                class="slide-image"
+                loading="lazy"
+              />
+              <div class="swiper-lazy-preloader"></div>
+              <div class="gradient"></div>
+              <div class="info">
+                <span class="rating">{{item?.vote_count}}</span>
+              </div>
+            </div>
+            <p class="video-title">{{item?.title}}</p>
+          </swiper-slide>
+        </swiper-container>
+      </div>
 
-  <div class="category-container popular-movies">
-    <div class="category-title-container">
-      <h3 class="category-title">Popular Movies</h3>
-      <ion-button
-        class="see-all-button"
-        (click)="seeAllCategoryData(popularMovies, 'Popular Movies')"
-        >See all <ion-icon name="chevron-forward"></ion-icon
-      ></ion-button>
-    </div>
-    <swiper-container
-      class="movies-container"
-      effect="card"
-      alt="poster"
-      [slidesPerView]="slidesPerView"
-      [spaceBetween]="5"
-      autoplay
-      [autoplay]="{delay: 1800}"
-      direction="horizontal"
-      parallax="true"
-      speed="1000"
-    >
-      <swiper-slide
-        class="swiper-slide"
-        *ngFor="let item of popularMovies; let i = index;"
-        [routerLink]="['/movie-details', item?.id]"
-      >
-        <div class="swiper-slide-content">
-          <img
-            [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
-            alt="{{item?.title}}"
-            class="slide-image"
-            loading="lazy"
-          />
-          <div class="swiper-lazy-preloader"></div>
-          <div class="gradient"></div>
-          <div class="info">
-            <span class="rating">{{item?.vote_count}}</span>
-          </div>
+      <div class="category-container popular-movies">
+        <div class="category-title-container">
+          <h3 class="category-title">Popular Movies</h3>
+          <ion-button
+            class="see-all-button"
+            (click)="seeAllCategoryData(popularMovies, 'Popular Movies')"
+            >See all <ion-icon name="chevron-forward"></ion-icon
+          ></ion-button>
         </div>
-        <p class="video-title">{{item?.title}}</p>
-      </swiper-slide>
-    </swiper-container>
-  </div>
+        <swiper-container
+          class="movies-container"
+          effect="card"
+          alt="poster"
+          [slidesPerView]="slidesPerView"
+          [spaceBetween]="5"
+          autoplay
+          [autoplay]="{delay: 1800}"
+          direction="horizontal"
+          parallax="true"
+          speed="1000"
+        >
+          <swiper-slide
+            class="swiper-slide"
+            *ngFor="let item of popularMovies; let i = index;"
+            [routerLink]="['/movie-details', item?.id]"
+          >
+            <div class="swiper-slide-content">
+              <img
+                [src]="imageBaseUrl + ''+thumbnailSize+'' + item?.poster_path"
+                alt="{{item?.title}}"
+                class="slide-image"
+                loading="lazy"
+              />
+              <div class="swiper-lazy-preloader"></div>
+              <div class="gradient"></div>
+              <div class="info">
+                <span class="rating">{{item?.vote_count}}</span>
+              </div>
+            </div>
+            <p class="video-title">{{item?.title}}</p>
+          </swiper-slide>
+        </swiper-container>
+      </div>
     } @else {
       <div class="spotligth-skeleton-container"></div>
       <ion-skeleton-text [animated]="true" class="spotlight-skeleton"
@@ -298,7 +299,81 @@
 
 
       <div class="flex-column-container" style="margin-top: 20px;">
-        <div class="title-swiper-container">
+        <div class="title-swiper-container" style="padding: 0px 5px;">
+          <div class="title-skeleton-container" style="display: flex; justify-content: space-between;">
+            <ion-skeleton-text [animated]="true" class="title-skeleton"
+            style="width: 50%;"/>
+
+            <ion-skeleton-text [animated]="true" class="title-skeleton"  style="width: 25%;"/>
+          </div>
+
+          <div class="swiper-skeleton-container">
+            <swiper-container [slidesPerView]="3.2" [spaceBetween]="5" direction="horizontal">
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+            </swiper-container>
+          </div>
+        </div>
+
+        <div class="title-swiper-container" style="padding: 0px 5px;">
+          <div class="title-skeleton-container" style="display: flex; justify-content: space-between;">
+            <ion-skeleton-text [animated]="true" class="title-skeleton"
+            style="width: 50%;"/>
+
+            <ion-skeleton-text [animated]="true" class="title-skeleton"  style="width: 25%;"/>
+          </div>
+
+          <div class="swiper-skeleton-container">
+            <swiper-container [slidesPerView]="3.2" [spaceBetween]="5" direction="horizontal">
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide">
+                <div class="swiper-slide-content">
+                  <ion-skeleton-text [animated]="true" class="swiper-skeleton"/>
+                </div>
+              </swiper-slide>
+            </swiper-container>
+          </div>
+        </div>
+
+        <div class="title-swiper-container" style="padding: 0px 5px;">
           <div class="title-skeleton-container" style="display: flex; justify-content: space-between;">
             <ion-skeleton-text [animated]="true" class="title-skeleton"
             style="width: 50%;"/>
