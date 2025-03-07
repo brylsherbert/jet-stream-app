@@ -30,7 +30,7 @@
   scrollEvents="true"
   [appHideHeader]="contentContainer"
 >
-  <div class="content-container" #contentContainer  style="z-index: 1;">
+  <ng-container class="content-container" #contentContainer>
     @if(!this.isLoading) {
       <swiper-container
       #spotLightContainer
@@ -42,7 +42,6 @@
       slides-per-view="1"
       parallax="true"
       speed="1000"
-      style="z-index: 9999;"
       (ionSlideChange)="onSlideChange($event)"
     >
       <swiper-slide
@@ -411,7 +410,7 @@
         </div>
       </div>
     }
-  </div>
+  </ng-container>
 
   <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content
