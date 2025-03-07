@@ -18,13 +18,11 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./category-details.page.scss'],
   standalone: true,
   imports: [
-    IonList,
     IonBackButton,
     IonButtons,
     IonContent,
     IonHeader,
     IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
     RouterModule,
