@@ -26,6 +26,7 @@ import { Router, RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     RouterModule,
+    IonToolbar,
   ],
 })
 export class CategoryDetailsPage {
