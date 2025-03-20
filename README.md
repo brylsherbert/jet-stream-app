@@ -23,5 +23,7 @@ Follow these steps to run the project locally:
 - cd jet-stream
 3. Install dependencies:
 - npm install
-4. Start the development server:
+4. Sync dependencies to native apps:
+- ionic cap sync
+5. Start the development server:
 - ionic serve
