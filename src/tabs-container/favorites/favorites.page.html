@@ -5,27 +5,35 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="sessionId() && favorites().length > 0">
-    <ion-list>
-      <ion-item *ngFor="let favorite of favorites()" [routerLink]="['/movie-details', favorite?.id]">
-        <ion-label>{{ favorite.title || favorite.name }}</ion-label>
-        <ion-button
-          fill="clear"
-          color="danger"
-          (click)="addFavorite('movie', favorite.id, false)"
-        >
-          Remove from Favorites
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
+  @if (sessionId() && favorites().length > 0) {
+    <div>
+      <ion-list>
+        @for (favorite of favorites(); track favorite) {
+          <ion-item [routerLink]="['/movie-details', favorite?.id]">
+            <ion-label>{{ favorite.title || favorite.name }}</ion-label>
+            <ion-button
+              fill="clear"
+              color="danger"
+              (click)="addFavorite('movie', favorite.id, false)"
+              >
+              Remove from Favorites
+            </ion-button>
+          </ion-item>
+        }
+      </ion-list>
+    </div>
+  }
 
   <!-- Message if No Favorites -->
-  <div *ngIf="sessionId() && favorites().length === 0">
-    <p>You currently have no favorites.</p>
-  </div>
+  @if (sessionId() && favorites().length === 0) {
+    <div>
+      <p>You currently have no favorites.</p>
+    </div>
+  }
 
-  <div *ngIf="!sessionId()" class="default-message">
-    <p>Please login to see favorites</p>
-  </div>
+  @if (!sessionId()) {
+    <div class="default-message">
+      <p>Please login to see favorites</p>
+    </div>
+  }
 </ion-content>

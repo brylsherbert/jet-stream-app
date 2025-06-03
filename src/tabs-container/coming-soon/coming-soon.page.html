@@ -11,57 +11,57 @@
         <div class="skeleton-wrapper" style="display: flex; flex-direction: column; gap: 40px;">
           <div class="skeleton-container">
             <ion-skeleton-text class="skeleton-thumbnail" animated="true" style="height: 200px; width: 100%;"></ion-skeleton-text>
-  
+
             <div class="skeleton-title-buttons-container">
               <ion-skeleton-text class="skeleton-title" animated="true"></ion-skeleton-text>
-  
+
               <div class="skeleton-buttons-container">
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
               </div>
             </div>
-  
+
             <div class="skeleton-overview-container" style="display: flex; flex-direction: column; gap: 10px;">
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
             </div>
           </div>
-  
+
           <div class="skeleton-container">
             <ion-skeleton-text class="skeleton-thumbnail" animated="true" style="height: 200px; width: 100%;"></ion-skeleton-text>
-  
+
             <div class="skeleton-title-buttons-container">
               <ion-skeleton-text class="skeleton-title" animated="true"></ion-skeleton-text>
-  
+
               <div class="skeleton-buttons-container">
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
               </div>
             </div>
-  
+
             <div class="skeleton-overview-container" style="display: flex; flex-direction: column; gap: 10px;">
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
             </div>
           </div>
-  
+
           <div class="skeleton-container">
             <ion-skeleton-text class="skeleton-thumbnail" animated="true" style="height: 200px; width: 100%;"></ion-skeleton-text>
-  
+
             <div class="skeleton-title-buttons-container">
               <ion-skeleton-text class="skeleton-title" animated="true"></ion-skeleton-text>
-  
+
               <div class="skeleton-buttons-container">
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
                 <ion-skeleton-text class="skeleton-button" animated="true"></ion-skeleton-text>
               </div>
             </div>
-  
+
             <div class="skeleton-overview-container" style="display: flex; flex-direction: column; gap: 10px;">
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
               <ion-skeleton-text class="skeleton-overview" animated="true" style="height: 10px;"></ion-skeleton-text>
@@ -71,49 +71,46 @@
         </div>
 
       } @else {
-        <ion-col
-          size="12"
-          class="upcoming-movies"
-          *ngFor="let item of this.upcomingMovies"
-        >
-          <img
-            [src]="imageBaseUrl + ''+'/original'+'' + item?.backdrop_path"
-            alt="{{item?.title}}"
-            class="movies-image"
-            loading="lazy"
-          />
-  
-          <ion-grid class="movie-toolbar">
-            <ion-row class="movie-details-container">
-              <ion-col size="8" class="movie-title-container">
-                <h5 class="movie-title">{{item?.title}}</h5>
+        @for (item of this.upcomingMovies; track item) {
+          <ion-col
+            size="12"
+            class="upcoming-movies"
+            >
+            <img
+              [src]="imageBaseUrl + ''+'/original'+'' + item?.backdrop_path"
+              alt="{{item?.title}}"
+              class="movies-image"
+              loading="lazy"
+              />
+            <ion-grid class="movie-toolbar">
+              <ion-row class="movie-details-container">
+                <ion-col size="8" class="movie-title-container">
+                  <h5 class="movie-title">{{item?.title}}</h5>
+                </ion-col>
+                <ion-col size="4" class="button-container">
+                  @if (this.accountDetails) {
+                    <ion-icon
+                      [name]="isFavorite(item?.id) ? 'heart' : 'heart-outline'"
+                      color="danger"
+                      size="large"
+                      (click)="toggleFavorite(item?.id)"
+                    ></ion-icon>
+                  }
+                  <ion-icon name="play-outline" size="large"></ion-icon>
+                  <ion-icon
+                    name="information-circle-outline"
+                    size="large"
+                    button
+                    [routerLink]="['/movie-details/', item.id]"
+                  ></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-col size="12" class="movies-overview-container">
+                <p class="movies-overview">{{item?.overview}}</p>
               </ion-col>
-  
-              <ion-col size="4" class="button-container">
-                <ion-icon
-                  [name]="isFavorite(item?.id) ? 'heart' : 'heart-outline'"
-                  color="danger"
-                  size="large"
-                  *ngIf="this.accountDetails"
-                  (click)="toggleFavorite(item?.id)"
-                ></ion-icon>
-  
-                <ion-icon name="play-outline" size="large"></ion-icon>
-  
-                <ion-icon
-                  name="information-circle-outline"
-                  size="large"
-                  button
-                  [routerLink]="['/movie-details/', item.id]"
-                ></ion-icon>
-              </ion-col>
-            </ion-row>
-  
-            <ion-col size="12" class="movies-overview-container">
-              <p class="movies-overview">{{item?.overview}}</p>
-            </ion-col>
-          </ion-grid>
-        </ion-col>
+            </ion-grid>
+          </ion-col>
+        }
       }
     </div>
   </ion-grid>

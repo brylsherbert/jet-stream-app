@@ -17,7 +17,7 @@ import {
   IonContent,
   IonInput,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
+
 import { ModalController } from '@ionic/angular';
 import {
   FormGroup,
@@ -45,10 +45,9 @@ import { arrowBack } from 'ionicons/icons';
     IonTitle,
     IonToolbar,
     IonHeader,
-    CommonModule,
     ReactiveFormsModule,
-    FormsModule,
-  ],
+    FormsModule
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AuthComponent implements OnInit {

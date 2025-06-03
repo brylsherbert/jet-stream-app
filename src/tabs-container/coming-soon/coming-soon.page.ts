@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   ApiResult,
   UpcomingMoviesData,
@@ -47,9 +47,8 @@ import {
     IonToolbar,
     IonTitle,
     IonContent,
-    CommonModule,
-    RouterModule,
-  ],
+    RouterModule
+],
 })
 export class ComingSoonPage {
   private tmdbService = inject(TmdbService);

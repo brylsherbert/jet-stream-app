@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
@@ -19,9 +19,8 @@ import { ModalController } from '@ionic/angular';
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
-  ],
+    FormsModule
+],
 })
 export class ModalPage implements OnInit {
   constructor(private modalCntrl: ModalController) {}

@@ -3,47 +3,47 @@
     <ion-back-button defaultHref="/"></ion-back-button>
   </ion-buttons>
   <!-- <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ movie()?.title }}</ion-title>
-  </ion-toolbar> -->
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/"></ion-back-button>
+  </ion-buttons>
+  <ion-title>{{ movie()?.title }}</ion-title>
+</ion-toolbar> -->
 </ion-header>
 
 <ion-content>
   @if (movie(); as movie) {
 
-  <ion-card class="ion-card-container ion-no-padding ion-no-margin">
-    <div class="thumbnail-container">
-      <img
-        id="thumbnail"
-        class="thumbnail"
-        [src]="imageBaseUrl + '/original' + movie?.backdrop_path"
-        alt=""
-        srcset=""
-        [ngClass]="{'hidden': isVideoPlaying, 'visible': !isVideoPlaying}"
-      />
+    <ion-card class="ion-card-container ion-no-padding ion-no-margin">
+      <div class="thumbnail-container">
+        <img
+          id="thumbnail"
+          class="thumbnail"
+          [src]="imageBaseUrl + '/original' + movie?.backdrop_path"
+          alt=""
+          srcset=""
+          [ngClass]="{'hidden': isVideoPlaying, 'visible': !isVideoPlaying}"
+          />
 
-      <video
-        #videoContent
-        width="600"
-        class="video-player"
-        id="video-player"
-        [muted]="'muted'"
-        playsInline
-        webkit-playsinline
-        [ngClass]="{'playing': isVideoPlaying, 'paused': !isVideoPlaying}"
-      >
-        <source src="../../../assets/mockdata/skate.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+        <video
+          #videoContent
+          width="600"
+          class="video-player"
+          id="video-player"
+          [muted]="'muted'"
+          playsInline
+          webkit-playsinline
+          [ngClass]="{'playing': isVideoPlaying, 'paused': !isVideoPlaying}"
+          >
+          <source src="../../../assets/mockdata/skate.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
-      <!-- <div class="poster-container" [style.height.px]="300">
+        <!-- <div class="poster-container" [style.height.px]="300">
         <img
           [style.height.px]="300"
           [src]="imageBaseUrl + '/w500' + movie?.images.posters[99].file_path"
           alt="poster"
-        />
+          />
       </div> -->
       <div class="gradient"></div>
       <ion-icon
@@ -63,7 +63,7 @@
         <ion-text color="light">
           <span>{{ movie.release_date | date: 'YYYY'}} /</span>
           @for (genre of movie.genres; track genre.id; let isLast = $last;) {
-          <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
+            <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
           }
         </ion-text>
         <ion-button
@@ -72,128 +72,135 @@
           (click)="handleVideoPlay()"
           ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
           >Play</ion-button
-        >
-
-        <ion-icon
-          [name]="isFavorite(movie?.id) ? 'heart' : 'heart-outline'"
-          slot="start"
-          color="danger"
-          size="large"
-          *ngIf="this.accountDetails"
-          (click)="toggleFavorite(movie?.id)"
-        ></ion-icon>
-      </div>
-
-      <ion-card-content class="ion-no-padding">
-        <div class="movie-overview-container">
-          <p
-            #movie_overview
-            color="medium"
-            class="movie-overview"
-            [class.expanded]="isExpanded"
-            [style.webkitLineClamp]="isExpanded ? 'none' : '3'"
           >
-            {{ movie.overview }}
-          </p>
-          <button
-            class="see-more-button"
-            (click)="toggleText()"
-            *ngIf="movie.overview.split(' ').length > 29"
-          >
-            {{ isExpanded ? 'See less' : 'See more' }}
-          </button>
+
+          @if (this.accountDetails) {
+            <ion-icon
+              [name]="isFavorite(movie?.id) ? 'heart' : 'heart-outline'"
+              slot="start"
+              color="danger"
+              size="large"
+              (click)="toggleFavorite(movie?.id)"
+            ></ion-icon>
+          }
         </div>
 
-        <div class="ion-items">
-          <ion-item lines="none" class="ion-item-container">
-            <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
-          </ion-item>
-
-          <ion-item
-            lines="none"
-            *ngIf="!movie.revenue.toString().startsWith('0')"
-          >
-            <ion-icon name="cash-outline" slot="start"></ion-icon>
-            <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
-          </ion-item>
-        </div>
-      </ion-card-content>
-    </ion-card-header>
-
-    <ion-grid fixed class="cast-container" *ngIf="movie?.credits?.cast?.length > 0">
-      <ion-label>
-        <h1 class="ion-padding">Cast</h1>
-      </ion-label>
-      <swiper-container
-        class="cast-swiper-container"
-        effect="card"
-        alt="poster"
-        [slidesPerView]="3.5"
-        [spaceBetween]="10"
-        direction="horizontal"
-        parallax="true"
-        speed="1000"
-      >
-        <!-- [slidesOffsetBefore]="16"
-        [slidesOffsetAfter]="16" -->
-        <!-- autoplay
-        [autoplay]="{delay: 1200}" -->
-        <swiper-slide
-          class="swiper-slide"
-          *ngFor="let cast of movie?.credits?.cast; let i = index;"
-          button
-        >
-          <div class="swiper-slide-content">
-            <ion-avatar class="cast-image-container">
-              <img
-                [src]="imageBaseUrl + ''+'/w500'+'' + cast?.profile_path"
-                alt="{{cast?.title}}"
-                class="cast-image"
-                loading="lazy"
-              />
-            </ion-avatar>
-            <div class="swiper-lazy-preloader"></div>
-            <div class="cast-info">
-              <span class="cast-actor-name">{{cast?.name}}</span>
-              <span class="cast-character-name">{{cast?.character}}</span>
-            </div>
+        <ion-card-content class="ion-no-padding">
+          <div class="movie-overview-container">
+            <p
+              #movie_overview
+              color="medium"
+              class="movie-overview"
+              [class.expanded]="isExpanded"
+              [style.webkitLineClamp]="isExpanded ? 'none' : '3'"
+              >
+              {{ movie.overview }}
+            </p>
+            @if (movie.overview.split(' ').length > 29) {
+              <button
+                class="see-more-button"
+                (click)="toggleText()"
+                >
+                {{ isExpanded ? 'See less' : 'See more' }}
+              </button>
+            }
           </div>
-        </swiper-slide>
-      </swiper-container>
-    </ion-grid>
-  </ion-card>
-  <div class="suggest-movies-container">
-    <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This' }}</h6>
-    <div class="suggested-movies">
-      @for (item of similarMovies().results.slice(0, similarVideosLength); track
-      item.poster_path) {
 
-      <img
-        [src]="imageBaseUrl + '/w300' + item.poster_path"
-        alt="poster"
-        *ngIf="item?.poster_path"
-        button
-        [routerLink]="['/movie-details/', item.id]"
-      />
+          <div class="ion-items">
+            <ion-item lines="none" class="ion-item-container">
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
+            </ion-item>
 
+            @if (!movie.revenue.toString().startsWith('0')) {
+              <ion-item
+                lines="none"
+                >
+                <ion-icon name="cash-outline" slot="start"></ion-icon>
+                <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
+              </ion-item>
+            }
+          </div>
+        </ion-card-content>
+      </ion-card-header>
+
+      @if (movie?.credits?.cast?.length > 0) {
+        <ion-grid fixed class="cast-container">
+          <ion-label>
+            <h1 class="ion-padding">Cast</h1>
+          </ion-label>
+          <swiper-container
+            class="cast-swiper-container"
+            effect="card"
+            alt="poster"
+            [slidesPerView]="3.5"
+            [spaceBetween]="10"
+            direction="horizontal"
+            parallax="true"
+            speed="1000"
+            >
+            <!-- [slidesOffsetBefore]="16"
+            [slidesOffsetAfter]="16" -->
+            <!-- autoplay
+            [autoplay]="{delay: 1200}" -->
+            @for (cast of movie?.credits?.cast; track cast; let i = $index) {
+              <swiper-slide
+                class="swiper-slide"
+                button
+                >
+                <div class="swiper-slide-content">
+                  <ion-avatar class="cast-image-container">
+                    <img
+                      [src]="imageBaseUrl + ''+'/w500'+'' + cast?.profile_path"
+                      alt="{{cast?.title}}"
+                      class="cast-image"
+                      loading="lazy"
+                      />
+                  </ion-avatar>
+                  <div class="swiper-lazy-preloader"></div>
+                  <div class="cast-info">
+                    <span class="cast-actor-name">{{cast?.name}}</span>
+                    <span class="cast-character-name">{{cast?.character}}</span>
+                  </div>
+                </div>
+              </swiper-slide>
+            }
+          </swiper-container>
+        </ion-grid>
       }
+    </ion-card>
+    <div class="suggest-movies-container">
+      <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This' }}</h6>
+      <div class="suggested-movies">
+        @for (item of similarMovies().results.slice(0, similarVideosLength); track
+          item.poster_path) {
+
+          @if (item?.poster_path) {
+            <img
+              [src]="imageBaseUrl + '/w300' + item.poster_path"
+              alt="poster"
+              button
+              [routerLink]="['/movie-details/', item.id]"
+              />
+          }
+
+        }
+      </div>
+      <div class="similar-movies-pagination-container">
+        <button
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          >
+          Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ similarMovies()?.total_pages }}</span>
+        <button
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === similarMovies()?.total_pages"
+          >
+          Next
+        </button>
+      </div>
     </div>
-    <div class="similar-movies-pagination-container">
-      <button
-        (click)="changePage(currentPage - 1)"
-        [disabled]="currentPage === 1"
-      >
-        Previous
-      </button>
-      <span>Page {{ currentPage }} of {{ similarMovies()?.total_pages }}</span>
-      <button
-        (click)="changePage(currentPage + 1)"
-        [disabled]="currentPage === similarMovies()?.total_pages"
-      >
-        Next
-      </button>
-    </div>
-  </div>
   }
 </ion-content>

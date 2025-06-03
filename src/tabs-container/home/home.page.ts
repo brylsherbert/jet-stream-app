@@ -39,7 +39,7 @@ import {
   heartOutline,
 } from 'ionicons/icons';
 
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { AuthComponent } from 'src/app/auth/auth.component';
@@ -57,10 +57,9 @@ import { AuthComponent } from 'src/app/auth/auth.component';
     IonHeader,
     IonToolbar,
     IonContent,
-    CommonModule,
     RouterModule,
-    SharedDirectivesModule,
-  ],
+    SharedDirectivesModule
+],
   providers: [ModalController],
 })
 export class HomePage implements OnInit {

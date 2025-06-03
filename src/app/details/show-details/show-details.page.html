@@ -3,114 +3,115 @@
     <ion-back-button defaultHref="/"></ion-back-button>
   </ion-buttons>
   <!-- <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ tvShow()?.title }}</ion-title>
-  </ion-toolbar> -->
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/"></ion-back-button>
+  </ion-buttons>
+  <ion-title>{{ tvShow()?.title }}</ion-title>
+</ion-toolbar> -->
 </ion-header>
 
 <ion-content>
   @if (tvShow(); as tvShow) {
 
-  <ion-card class="ion-card-container ion-no-padding ion-no-margin">
-    <div class="thumbnail-container">
-      <div
-        class="thumbnail"
-        [style.height.px]="360"
-        [style.background]="'url('+ imageBaseUrl + '/w154' + tvShow?.poster_path +') no-repeat center center / cover'"
-      ></div>
-      <div class="poster-container" [style.height.px]="300">
-        <img
-          [style.height.px]="300"
-          [src]="imageBaseUrl + '/w500' + tvShow?.poster_path"
-          alt="poster"
-        />
-      </div>
-      <div class="gradient"></div>
-    </div>
-
-    <ion-card-header class="ion-card-header-container">
-      <div class="ion-card-title-details">
-        <ion-card-title>{{tvShow.name}} </ion-card-title>
-        <ion-card-subtitle>{{tvShow.tagline}}</ion-card-subtitle>
-        <ion-text color="light">
-          <span>{{ tvShow.last_air_date | date: 'YYYY'}} /</span>
-          @for (genre of tvShow.genres; track genre.id; let isLast = $last;) {
-          <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
-          }
-        </ion-text>
-        <ion-button expand="block" class="play-button"
-          ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
-          >Play</ion-button
-        >
-      </div>
-
-      <ion-card-content class="ion-no-padding">
-        <div class="tvShow-overview-container">
-          <p
-            #tvShow_overview
-            color="medium"
-            class="tvShow-overview"
-            [class.expanded]="isExpanded"
-            [style.webkitLineClamp]="isExpanded ? 'none' : '3'"
-          >
-            {{ tvShow.overview }}
-          </p>
-          <button
-            class="see-more-button"
-            (click)="toggleText()"
-            *ngIf="tvShow.overview.split(' ').length > 25"
-          >
-            {{ isExpanded ? 'See less' : 'See more' }}
-          </button>
+    <ion-card class="ion-card-container ion-no-padding ion-no-margin">
+      <div class="thumbnail-container">
+        <div
+          class="thumbnail"
+          [style.height.px]="360"
+          [style.background]="'url('+ imageBaseUrl + '/w154' + tvShow?.poster_path +') no-repeat center center / cover'"
+        ></div>
+        <div class="poster-container" [style.height.px]="300">
+          <img
+            [style.height.px]="300"
+            [src]="imageBaseUrl + '/w500' + tvShow?.poster_path"
+            alt="poster"
+            />
         </div>
+        <div class="gradient"></div>
+      </div>
 
-        <!-- <div class="ion-items">
-          <ion-item lines="none" class="ion-item-container">
-            <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
-          </ion-item>
+      <ion-card-header class="ion-card-header-container">
+        <div class="ion-card-title-details">
+          <ion-card-title>{{tvShow.name}} </ion-card-title>
+          <ion-card-subtitle>{{tvShow.tagline}}</ion-card-subtitle>
+          <ion-text color="light">
+            <span>{{ tvShow.last_air_date | date: 'YYYY'}} /</span>
+            @for (genre of tvShow.genres; track genre.id; let isLast = $last;) {
+              <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
+            }
+          </ion-text>
+          <ion-button expand="block" class="play-button"
+            ><ion-icon name="play-sharp" slot="start" size="medium"></ion-icon
+            >Play</ion-button
+            >
+          </div>
 
-          <ion-item lines="none">
-            <ion-icon name="cash-outline" slot="start"></ion-icon>
-            <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
-          </ion-item>
-        </div> -->
-      </ion-card-content>
-    </ion-card-header>
-  </ion-card>
+          <ion-card-content class="ion-no-padding">
+            <div class="tvShow-overview-container">
+              <p
+                #tvShow_overview
+                color="medium"
+                class="tvShow-overview"
+                [class.expanded]="isExpanded"
+                [style.webkitLineClamp]="isExpanded ? 'none' : '3'"
+                >
+                {{ tvShow.overview }}
+              </p>
+              @if (tvShow.overview.split(' ').length > 25) {
+                <button
+                  class="see-more-button"
+                  (click)="toggleText()"
+                  >
+                  {{ isExpanded ? 'See less' : 'See more' }}
+                </button>
+              }
+            </div>
 
-  <div class="suggest-movies-container">
-    <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This'}}</h6>
-    <div class="suggested-movies">
-      @for (item of similarMovies().results.slice(0, similarVideosLength); track
-      item.poster_path) {
+            <!-- <div class="ion-items">
+            <ion-item lines="none" class="ion-item-container">
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
+            </ion-item>
 
-      <img
-        [src]="imageBaseUrl + '/w300' + item.poster_path"
-        alt="poster"
-        button
-        [routerLink]="['/show-details/', item.id]"
-      />
+            <ion-item lines="none">
+              <ion-icon name="cash-outline" slot="start"></ion-icon>
+              <ion-label>{{ movie.revenue | currency: 'USD'}}</ion-label>
+            </ion-item>
+          </div> -->
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
 
-      }
+    <div class="suggest-movies-container">
+      <h6>{{similarIsEmpty ? 'Recommended Movies' : 'More Like This'}}</h6>
+      <div class="suggested-movies">
+        @for (item of similarMovies().results.slice(0, similarVideosLength); track
+          item.poster_path) {
+
+          <img
+            [src]="imageBaseUrl + '/w300' + item.poster_path"
+            alt="poster"
+            button
+            [routerLink]="['/show-details/', item.id]"
+            />
+
+        }
+      </div>
+      <div class="similar-movies-pagination-container">
+        <button
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          >
+          Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ similarMovies()?.total_pages }}</span>
+        <button
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === similarMovies()?.total_pages"
+          >
+          Next
+        </button>
+      </div>
     </div>
-    <div class="similar-movies-pagination-container">
-      <button
-        (click)="changePage(currentPage - 1)"
-        [disabled]="currentPage === 1"
-      >
-        Previous
-      </button>
-      <span>Page {{ currentPage }} of {{ similarMovies()?.total_pages }}</span>
-      <button
-        (click)="changePage(currentPage + 1)"
-        [disabled]="currentPage === similarMovies()?.total_pages"
-      >
-        Next
-      </button>
-    </div>
-  </div>
   }
 </ion-content>

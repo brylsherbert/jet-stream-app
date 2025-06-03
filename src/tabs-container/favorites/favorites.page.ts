@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
@@ -13,14 +13,7 @@ import { TmdbService } from 'src/app/services/tmdb.service';
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
-  imports: [IonList, IonLabel, IonItem, IonButton, 
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [IonList, IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FavoritesPage {

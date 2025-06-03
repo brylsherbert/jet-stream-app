@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
@@ -23,11 +23,10 @@ import { Router, RouterModule } from '@angular/router';
     IonContent,
     IonHeader,
     IonTitle,
-    CommonModule,
     FormsModule,
     RouterModule,
-    IonToolbar,
-  ],
+    IonToolbar
+],
 })
 export class CategoryDetailsPage {
   public router = inject(Router);
