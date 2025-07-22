@@ -35,7 +35,7 @@
           <ion-card-title>{{tvShow.name}} </ion-card-title>
           <ion-card-subtitle>{{tvShow.tagline}}</ion-card-subtitle>
           <ion-text color="light">
-            <span>{{ tvShow.last_air_date | date: 'YYYY'}} /</span>
+            <span>{{ tvShow.last_air_date | date: 'y'}} /</span>
             @for (genre of tvShow.genres; track genre.id; let isLast = $last;) {
               <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
             }

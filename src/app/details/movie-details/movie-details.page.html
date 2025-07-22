@@ -61,7 +61,7 @@
         <ion-card-title>{{movie.title}} </ion-card-title>
         <ion-card-subtitle>{{movie.tagline}}</ion-card-subtitle>
         <ion-text color="light">
-          <span>{{ movie.release_date | date: 'YYYY'}} /</span>
+          <span>{{ movie.release_date | date: 'y'}} /</span>
           @for (genre of movie.genres; track genre.id; let isLast = $last;) {
             <span> {{genre.name}} {{!isLast ? '•' : ''}} </span>
           }
@@ -109,7 +109,7 @@
           <div class="ion-items">
             <ion-item lines="none" class="ion-item-container">
               <ion-icon name="calendar-outline" slot="start"></ion-icon>
-              <ion-label>{{ movie.release_date | date: 'YYYY-MM-d'}}</ion-label>
+              <ion-label>{{ movie.release_date | date: 'yyyy-MM-d'}}</ion-label>
             </ion-item>
 
             @if (!movie.revenue.toString().startsWith('0')) {
