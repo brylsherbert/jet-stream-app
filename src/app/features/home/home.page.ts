@@ -35,11 +35,12 @@ import {
   personCircle,
   heart,
   heartOutline,
+  search,
 } from 'ionicons/icons';
 
 import { Router, RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { AuthComponent } from 'src/app/shared/components/auth/auth.component';
+import { AuthComponent } from 'src/app/auth/auth.component';
 
 @Component({
   selector: 'app-home',
@@ -90,13 +91,14 @@ export class HomePage implements OnInit {
 
   constructor() {
     addIcons({
-      menuOutline,
+      search,
       personCircle,
-      caretDownOutline,
-      add,
       play,
       informationCircleOutline,
       chevronForward,
+      menuOutline,
+      caretDownOutline,
+      add,
       person,
       settings,
       heart,

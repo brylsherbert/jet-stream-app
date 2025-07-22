@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { TmdbService } from '../../services/tmdb.service';
+import { TmdbService } from '../shared/services/tmdb.service';
 import {
   IonHeader,
   IonToolbar,

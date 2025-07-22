@@ -15,8 +15,6 @@ import {
   homeOutline,
   copy,
   copyOutline,
-  search,
-  searchOutline,
   download,
   downloadOutline,
 } from 'ionicons/icons';
@@ -51,8 +49,6 @@ export class TabsPage {
       homeOutline,
       copy,
       copyOutline,
-      search,
-      searchOutline,
       download,
       downloadOutline,
     });

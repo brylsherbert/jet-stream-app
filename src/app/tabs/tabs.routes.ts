@@ -3,7 +3,7 @@ import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
-    path: 'tabs-container/tabs',
+    path: 'tabs',
     component: TabsPage,
     children: [
       {
@@ -19,11 +19,6 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'search',
-        loadComponent: () =>
-          import('../features/search/search.page').then((m) => m.SearchPage),
-      },
-      {
         path: 'favorites',
         loadComponent: () =>
           import('../features/favorites/favorites.page').then(
@@ -32,14 +27,14 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'tabs-container/tabs/home',
+        redirectTo: '/tabs/home',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: 'tabs-container/tabs/home',
+    redirectTo: '/tabs/home',
     pathMatch: 'full',
   },
 ];

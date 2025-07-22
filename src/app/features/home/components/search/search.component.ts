@@ -1,4 +1,6 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -26,9 +28,7 @@ import {
   IonInfiniteScrollContent,
 } from '@ionic/angular/standalone';
 import { catchError, finalize } from 'rxjs';
-import { MovieResult } from 'src/app/shared/services/interfaces';
-import { MovieService } from 'src/app/shared/services/movie.service';
-import { addIcons } from 'ionicons';
+import { ApiResult, MovieResult } from '../../../../shared/services/interfaces';
 import {
   add,
   calendarOutline,
@@ -42,14 +42,13 @@ import {
   settings,
   settingsOutline,
 } from 'ionicons/icons';
-import { DatePipe } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { MovieService } from '../../../../shared/services/movie.service';
 
 @Component({
   selector: 'app-search',
-  templateUrl: 'search.page.html',
-  styleUrls: ['search.page.scss'],
-  standalone: true,
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
   imports: [
     IonInfiniteScrollContent,
     IonBadge,
@@ -67,9 +66,10 @@ import { RouterModule } from '@angular/router';
     IonContent,
     DatePipe,
     RouterModule,
+    IonBackButton,
   ],
 })
-export class SearchPage {
+export class SearchComponent {
   @ViewChild('searchInput') myInput: any;
   public movie_service = inject(MovieService);
   public image_base_url = 'https://image.tmdb.org/t/p';
@@ -135,7 +135,7 @@ export class SearchPage {
         })
       )
       .subscribe({
-        next: (response) => {
+        next: (response: ApiResult<MovieResult>) => {
           if (this.current_page === 1) {
             this.search_response = [...response.results];
           } else {

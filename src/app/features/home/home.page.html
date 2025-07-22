@@ -8,6 +8,12 @@
       <ion-col size="6" class="ion-text-right">
         <ion-icon
           class="large-icon"
+          name="search"
+          button
+          [routerLink]="['/search']"
+        ></ion-icon>
+        <ion-icon
+          class="large-icon"
           name="person-circle"
           (click)="openAuthModal()"
         ></ion-icon>

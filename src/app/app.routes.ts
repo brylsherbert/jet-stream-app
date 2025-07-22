@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { SearchComponent } from './features/home/components/search/search.component';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,9 @@ export const routes: Routes = [
       import('./shared/pages/category-details/category-details.page').then(
         (m) => m.CategoryDetailsPage
       ),
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
   },
 ];
