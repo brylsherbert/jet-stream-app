@@ -136,4 +136,17 @@ export class TmdbService {
       });
     }
   }
+
+  fetchNewToken() {
+    this.getNewRequestToken().subscribe({
+      next: (data) => {
+        console.log('Request token:', data.request_token);
+        const authUrl = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=YOUR_REDIRECT_URL`;
+        window.open(authUrl, '_blank'); // Open the login page in a new tab
+      },
+      error: (error) => {
+        console.error('Failed to fetch request token:', error);
+      },
+    });
+  }
 }

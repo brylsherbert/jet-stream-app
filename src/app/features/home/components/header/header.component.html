@@ -1,0 +1,33 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent" class="header-items-container">
+    <ion-row class="logo-container">
+      <ion-col size="6" class="ion-text-left"
+        ><img class="logo" src="../../assets/mockdata/netflix-logo.png" alt=""
+      /></ion-col>
+
+      <ion-col size="6" class="ion-text-right">
+        <ion-icon
+          class="large-icon"
+          name="search"
+          button
+          [routerLink]="['/search']"
+        ></ion-icon>
+        <ion-icon
+          class="large-icon"
+          name="person-circle"
+          button
+          [routerLink]="['/authentication']"
+        ></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row class="menu-category-container">
+      <ion-col>TV Shows</ion-col>
+      <ion-col>Movies</ion-col>
+      <ion-col tappable (click)="openCategories()"
+        >Categories
+        <ion-icon name="caret-down-outline"></ion-icon>
+      </ion-col>
+    </ion-row> -->
+  </ion-toolbar>
+</ion-header>

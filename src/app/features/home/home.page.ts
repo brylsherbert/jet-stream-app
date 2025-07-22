@@ -6,8 +6,6 @@ import {
   inject,
 } from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
   IonContent,
   InfiniteScrollCustomEvent,
   IonRow,
@@ -16,12 +14,10 @@ import {
   AlertController,
 } from '@ionic/angular/standalone';
 import { MovieService } from 'src/app/shared/services/movie.service';
-import { ModalController } from '@ionic/angular';
 import { TmdbService } from 'src/app/shared/services/tmdb.service';
 import { catchError, finalize } from 'rxjs';
 import { ApiResult, MovieResult } from 'src/app/shared/services/interfaces';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
-import { DrawerService } from 'src/app/shared/services/drawer.service';
 import { addIcons } from 'ionicons';
 import {
   caretDownOutline,
@@ -40,8 +36,8 @@ import {
 
 import { Router, RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { AuthComponent } from 'src/app/auth/auth.component';
-
+import { UiService } from 'src/app/shared/services/ui.service';
+import { HeaderComponent } from './components/header/header.component';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -52,23 +48,19 @@ import { AuthComponent } from 'src/app/auth/auth.component';
     IonIcon,
     IonCol,
     IonRow,
-    IonHeader,
-    IonToolbar,
     IonContent,
     RouterModule,
     SharedDirectivesModule,
+    HeaderComponent,
   ],
-  providers: [ModalController],
 })
 export class HomePage implements OnInit {
   private tmdbService = inject(TmdbService);
-  private modalController = inject(ModalController);
   public movieService = inject(MovieService);
-  private alertController = inject(AlertController);
+  protected uiService = inject(UiService);
   public currentPage = 1;
   public error: string | null = null;
   public isLoading = false;
-  private isLoadingSeries = false;
   public popularMovies: MovieResult[] = [];
   public topRatedMovies: MovieResult[] = [];
   public nowPlayingMovies: MovieResult[] = [];
@@ -199,7 +191,6 @@ export class HomePage implements OnInit {
       .getPopularTvShows<MovieResult>()
       .pipe(
         finalize(() => {
-          this.isLoadingSeries = false;
           if (event) {
             event.target.complete();
           }
@@ -302,26 +293,6 @@ export class HomePage implements OnInit {
     ]);
   }
 
-  async openAuthModal() {
-    const modal = await this.modalController.create({
-      component: AuthComponent,
-    });
-    return await modal.present();
-  }
-
-  fetchNewToken() {
-    this.tmdbService.getNewRequestToken().subscribe({
-      next: (data) => {
-        console.log('Request token:', data.request_token);
-        const authUrl = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=YOUR_REDIRECT_URL`;
-        window.open(authUrl, '_blank'); // Open the login page in a new tab
-      },
-      error: (error) => {
-        console.error('Failed to fetch request token:', error);
-      },
-    });
-  }
-
   handleCallback(verificationToken: string) {
     // After user authenticates, use the verification token to create a session
     this.tmdbService.createSession(verificationToken).subscribe({
@@ -355,7 +326,7 @@ export class HomePage implements OnInit {
           },
         });
     } else {
-      this.loginAlert();
+      this.uiService.loginAlert();
     }
   }
 
@@ -363,30 +334,5 @@ export class HomePage implements OnInit {
     return this.tmdbService
       .favorites()
       .some((favorite) => favorite.id === movieId);
-  }
-
-  async loginAlert() {
-    const alert = await this.alertController.create({
-      header: 'Login Required',
-      subHeader: 'Access Restricted',
-      message: 'Please log in to continue.',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'alert-cancel',
-        },
-        {
-          text: 'OK',
-          handler: () => {
-            this.openAuthModal();
-          },
-          cssClass: 'alert-ok',
-        },
-      ],
-      cssClass: 'custom-alert',
-    });
-
-    await alert.present();
   }
 }

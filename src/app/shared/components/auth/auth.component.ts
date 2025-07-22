@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { TmdbService } from '../shared/services/tmdb.service';
+import { TmdbService } from '../../services/tmdb.service';
 import {
   IonHeader,
   IonToolbar,
@@ -16,9 +16,9 @@ import {
   IonButton,
   IonContent,
   IonInput,
+  ModalController,
 } from '@ionic/angular/standalone';
 
-import { ModalController } from '@ionic/angular';
 import {
   FormGroup,
   FormsModule,
@@ -51,7 +51,7 @@ import { arrowBack } from 'ionicons/icons';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AuthComponent implements OnInit {
-  private tmdbService = inject(TmdbService);
+  protected tmdbService = inject(TmdbService);
   private modalController = inject(ModalController);
   private fb = inject(FormBuilder);
   form!: FormGroup;
@@ -73,18 +73,6 @@ export class AuthComponent implements OnInit {
     if (this.sessionId()) {
       this.tmdbService.loadFavorites();
     }
-  }
-
-  fetchNewToken() {
-    this.tmdbService.getNewRequestToken().subscribe({
-      next: (data) => {
-        this.requestToken = data.request_token;
-        this.validateTokenWithLogin(); // Proceed to validate token with login
-      },
-      error: (error) => {
-        console.error('Failed to fetch request token:', error);
-      },
-    });
   }
 
   validateTokenWithLogin() {

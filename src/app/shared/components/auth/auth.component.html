@@ -18,7 +18,7 @@
 <ion-content class="ion-padding">
   <!-- Login Form -->
   @if (!sessionId()) {
-    <form [formGroup]="form" (ngSubmit)="fetchNewToken()">
+    <form [formGroup]="form" (ngSubmit)="this.tmdbService.fetchNewToken()">
       <ion-item>
         <ion-label position="stacked">Username</ion-label>
         <ion-input

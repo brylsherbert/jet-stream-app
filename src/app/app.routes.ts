@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { SearchComponent } from './features/home/components/search/search.component';
+import { AuthComponent } from './shared/components/auth/auth.component';
 
 export const routes: Routes = [
   {
@@ -30,5 +31,9 @@ export const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+  },
+  {
+    path: 'authentication',
+    component: AuthComponent,
   },
 ];
