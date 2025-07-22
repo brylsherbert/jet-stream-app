@@ -46,7 +46,7 @@ import {
   playSharp,
   chevronBack,
 } from 'ionicons/icons';
-import { MovieResult } from 'src/app/services/interfaces';
+import { MovieResult } from 'src/app/shared/services/interfaces';
 import { RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 

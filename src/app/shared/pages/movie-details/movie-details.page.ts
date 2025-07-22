@@ -32,7 +32,7 @@ import {
   IonCol,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../../services/movie.service';
-import { TmdbService } from 'src/app/services/tmdb.service';
+import { TmdbService } from 'src/app/shared/services/tmdb.service';
 
 import { addIcons } from 'ionicons';
 import {

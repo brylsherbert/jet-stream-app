@@ -1,9 +1,8 @@
-
 import {
   ApiResult,
   UpcomingMoviesData,
   UpcomingMoviesResult,
-} from './../../app/services/interfaces';
+} from '../../shared/services/interfaces';
 import { Component, inject } from '@angular/core';
 import {
   IonHeader,
@@ -16,13 +15,15 @@ import {
   IonRow,
   IonList,
   IonIcon,
-  IonCol, IonSkeletonText } from '@ionic/angular/standalone';
+  IonCol,
+  IonSkeletonText,
+} from '@ionic/angular/standalone';
 import { catchError, finalize } from 'rxjs';
-import { MovieService } from 'src/app/services/movie.service';
+import { MovieService } from 'src/app/shared/services/movie.service';
 import { Capacitor } from '@capacitor/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { TmdbService } from 'src/app/services/tmdb.service';
+import { TmdbService } from 'src/app/shared/services/tmdb.service';
 import {
   informationCircle,
   play,
@@ -47,8 +48,8 @@ import {
     IonToolbar,
     IonTitle,
     IonContent,
-    RouterModule
-],
+    RouterModule,
+  ],
 })
 export class ComingSoonPage {
   private tmdbService = inject(TmdbService);

@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { TmdbService } from '../services/tmdb.service';
+import { TmdbService } from '../../services/tmdb.service';
 import {
   IonHeader,
   IonToolbar,
@@ -46,8 +46,8 @@ import { arrowBack } from 'ionicons/icons';
     IonToolbar,
     IonHeader,
     ReactiveFormsModule,
-    FormsModule
-],
+    FormsModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AuthComponent implements OnInit {

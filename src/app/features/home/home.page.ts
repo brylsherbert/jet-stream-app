@@ -8,22 +8,20 @@ import {
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonContent,
   InfiniteScrollCustomEvent,
   IonRow,
   IonCol,
   IonIcon,
-  AlertController
+  AlertController,
 } from '@ionic/angular/standalone';
-import { MovieService } from 'src/app/services/movie.service';
+import { MovieService } from 'src/app/shared/services/movie.service';
 import { ModalController } from '@ionic/angular';
-import { TmdbService } from 'src/app/services/tmdb.service';
-import { catchError, finalize, lastValueFrom } from 'rxjs';
-import { ApiResult, MovieResult } from 'src/app/services/interfaces';
-import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
-import { ModalPage } from 'src/app/modal/modal.page';
-import { DrawerService } from 'src/app/services/drawer.service';
+import { TmdbService } from 'src/app/shared/services/tmdb.service';
+import { catchError, finalize } from 'rxjs';
+import { ApiResult, MovieResult } from 'src/app/shared/services/interfaces';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
 import { addIcons } from 'ionicons';
 import {
   caretDownOutline,
@@ -39,10 +37,9 @@ import {
   heartOutline,
 } from 'ionicons/icons';
 
-
 import { Router, RouterModule } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { AuthComponent } from 'src/app/auth/auth.component';
+import { AuthComponent } from 'src/app/shared/components/auth/auth.component';
 
 @Component({
   selector: 'app-home',
@@ -58,14 +55,13 @@ import { AuthComponent } from 'src/app/auth/auth.component';
     IonToolbar,
     IonContent,
     RouterModule,
-    SharedDirectivesModule
-],
+    SharedDirectivesModule,
+  ],
   providers: [ModalController],
 })
 export class HomePage implements OnInit {
   private tmdbService = inject(TmdbService);
   private modalController = inject(ModalController);
-  private drawerService = inject(DrawerService);
   public movieService = inject(MovieService);
   private alertController = inject(AlertController);
   public currentPage = 1;
@@ -104,7 +100,7 @@ export class HomePage implements OnInit {
       person,
       settings,
       heart,
-      heartOutline
+      heartOutline,
     });
 
     effect(() => {
@@ -276,7 +272,7 @@ export class HomePage implements OnInit {
         this.objectFit = 'cover';
       } else {
         this.objectFit = 'cover';
-      } 
+      }
     };
 
     const getImageSize = async () => {
@@ -336,9 +332,9 @@ export class HomePage implements OnInit {
     });
   }
 
-    toggleFavorite(movieId: number) {
-      if (this.accountDetails) {
-        const isCurrentlyFavorite = this.tmdbService
+  toggleFavorite(movieId: number) {
+    if (this.accountDetails) {
+      const isCurrentlyFavorite = this.tmdbService
         .favorites()
         .some((favorite) => favorite.id === movieId);
       this.tmdbService
@@ -356,40 +352,39 @@ export class HomePage implements OnInit {
             console.error('Failed to toggle favorite:', error);
           },
         });
-      } else {
-        this.loginAlert();
-      }
-      
+    } else {
+      this.loginAlert();
     }
-  
-    isFavorite(movieId: number): boolean {
-      return this.tmdbService
-        .favorites()
-        .some((favorite) => favorite.id === movieId);
-    }
+  }
 
-    async loginAlert() {
-      const alert = await this.alertController.create({
-        header: 'Login Required',
-        subHeader: 'Access Restricted',
-        message: 'Please log in to continue.',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'alert-cancel',
+  isFavorite(movieId: number): boolean {
+    return this.tmdbService
+      .favorites()
+      .some((favorite) => favorite.id === movieId);
+  }
+
+  async loginAlert() {
+    const alert = await this.alertController.create({
+      header: 'Login Required',
+      subHeader: 'Access Restricted',
+      message: 'Please log in to continue.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'alert-cancel',
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.openAuthModal();
           },
-          {
-            text: 'OK',
-            handler: () => {
-              this.openAuthModal();
-            },
-            cssClass: 'alert-ok',
-          },
-        ],
-        cssClass: 'custom-alert',
-      });
-    
-      await alert.present();
-    }    
+          cssClass: 'alert-ok',
+        },
+      ],
+      cssClass: 'custom-alert',
+    });
+
+    await alert.present();
+  }
 }

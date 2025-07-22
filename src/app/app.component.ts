@@ -2,7 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { App } from '@capacitor/app';
-import { TmdbService } from './services/tmdb.service';
+import { TmdbService } from './shared/services/tmdb.service';
 register();
 
 @Component({

@@ -1,19 +1,39 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  OnInit,
+} from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
   IonTitle,
-  IonToolbar, IonButton, IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
-import { TmdbService } from 'src/app/services/tmdb.service';
+  IonToolbar,
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonList,
+} from '@ionic/angular/standalone';
+import { TmdbService } from 'src/app/shared/services/tmdb.service';
 
 @Component({
   selector: 'app-tab4',
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
-  imports: [IonList, IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, FormsModule],
+  imports: [
+    IonList,
+    IonLabel,
+    IonItem,
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    FormsModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FavoritesPage {
@@ -27,14 +47,12 @@ export class FavoritesPage {
     if (this.sessionId()) {
       this.tmdbService.loadFavorites();
     }
-
   }
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     console.log('Favorites: ', this.favorites());
-    
   }
 
   addFavorite(mediaType: string, mediaId: number, favorite: boolean) {

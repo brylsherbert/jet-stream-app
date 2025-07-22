@@ -26,8 +26,8 @@ import {
   IonInfiniteScrollContent,
 } from '@ionic/angular/standalone';
 import { catchError, finalize } from 'rxjs';
-import { MovieResult } from 'src/app/services/interfaces';
-import { MovieService } from 'src/app/services/movie.service';
+import { MovieResult } from 'src/app/shared/services/interfaces';
+import { MovieService } from 'src/app/shared/services/movie.service';
 import { addIcons } from 'ionicons';
 import {
   add,

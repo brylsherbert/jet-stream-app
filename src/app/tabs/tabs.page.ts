@@ -20,7 +20,7 @@ import {
   download,
   downloadOutline,
 } from 'ionicons/icons';
-import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 
 @Component({
   selector: 'app-tabs',
